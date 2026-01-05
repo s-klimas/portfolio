@@ -895,7 +895,6 @@ html, body {
 }
 
 .project-show-more {
-    color: var(--Middle-Grey, #808080);
     font-family: "Inter", sans-serif;
     font-size: 1rem;
     font-style: normal;
@@ -903,6 +902,10 @@ html, body {
     line-height: normal;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.project-show-more > a {
+    color: var(--Middle-Grey, #808080);
 }
 
 .project-show-more a:hover{
