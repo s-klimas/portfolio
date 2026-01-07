@@ -238,20 +238,37 @@ html, body {
     gap: 1rem;
 }
 
-.skill-main:has(.label:hover),
-.skill-main:has(.circle:hover) {
-    & > .label,
-    & > .circle {
-        transform: scale(1.1);
-    }
+.skill-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom-right-radius: 100%;
+    border-bottom-left-radius: 100%;
+    cursor: pointer;
 }
 
-.skill-main:has(.label:active),
-.skill-main:has(.circle:active) {
-    & > .label,
-    & > .circle {
-        transform: scale(1.3);
-    }
+.skill-box:hover > div {
+    transform: scale(1.1);
+}
+
+.skill-java > .skill-box:hover > .circle {
+    transform: rotate(-135deg) scale(1.1);
+}
+
+.skill-database > .skill-box:hover > .circle {
+    transform: rotate(135deg) scale(1.1);
+}
+
+.skill-others > .skill-box:hover > .circle {
+    transform: rotate(-45deg) scale(1.1);
+}
+
+.skill-tools > .skill-box:hover > .circle {
+    transform: rotate(45deg) scale(1.1);
+}
+
+.skill-box:active > div {
+    transform: scale(1.3);
 }
 
 .label {
@@ -610,19 +627,21 @@ html, body {
 .about-me-name {
     color: var(--Light-Text, #D9D9D9);
     font-family: "Inter", sans-serif;
-    font-size: 4rem;
+    font-size: 3rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    text-transform: uppercase;
 }
 
 .about-me-title {
     color: var(--Mustard, #D3CFBA);
     font-family: "Inter", sans-serif;
-    font-size: 1.875rem;
+    font-size: 1.8rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    text-transform: uppercase;
 }
 
 .about-me-description {
@@ -731,24 +750,6 @@ html, body {
     font-weight: 600;
     line-height: normal;
     text-decoration: none;
-}
-
-.about-me-links-cv {
-    position: relative;
-    display: inline-block;
-    padding-bottom: 6px;
-}
-
-.about-me-links-cv .line {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--Gold, #B57F02);
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform .3s ease;
 }
 
 .about-me-links-cv:hover .line {
@@ -954,7 +955,6 @@ html, body {
     background: var(--Light-Text, #D9D9D9);
     border-radius: 1rem;
     transition: 0.3s ease-in-out;
-    cursor: pointer;
 }
 
 .project-full-header {
@@ -1171,12 +1171,16 @@ html, body {
 
     .grid {
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(5, 1fr);
+        grid-template-rows: 1fr 1fr 1fr 1fr 50px;
         row-gap: 2rem;
+        min-height: 70vh;
     }
 
     .skill-main {
         scale: 0.8;
+    }
+
+    .skill-box {
         display: flex;
         flex-direction: row-reverse;
         justify-content: center;

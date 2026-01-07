@@ -142,11 +142,11 @@ document.querySelectorAll('.project a').forEach(a => {
     });
 });
 
-document.querySelectorAll('.project-full').forEach(project => {
-    project.addEventListener('click', () => {
-        location.href = project.dataset.link;
-    });
-});
+// document.querySelectorAll('.project-full').forEach(project => {
+//     project.addEventListener('click', () => {
+//         location.href = project.dataset.link;
+//     });
+// });
 
 document.querySelectorAll('.project-full a').forEach(a => {
     a.addEventListener('click', (e) => {
@@ -154,7 +154,7 @@ document.querySelectorAll('.project-full a').forEach(a => {
     });
 });
 
-document.querySelectorAll('.circle').forEach(project => {
+document.querySelectorAll('.skill-box').forEach(project => {
     project.addEventListener('click', () => {
         location.href = project.dataset.link;
     });
