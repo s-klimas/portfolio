@@ -421,6 +421,10 @@ html, body {
     margin-bottom: 10px;
 }
 
+.skill-line:hover {
+    background-color: #cdc9b6;
+}
+
 .skill-info > .skill {
     display: none;
     flex-direction: column;
@@ -499,6 +503,10 @@ html, body {
     height: auto!important;
     overflow: hidden!important;
     transition: height 0.5s ease!important;
+}
+
+.skill-info:hover {
+    background-color: #cdc9b6;
 }
 
 .skill {
@@ -675,6 +683,97 @@ html, body {
 
 .about-me-description > * {
     margin-top: 0.8rem;
+}
+
+.about-me-tables {
+    font-family: "Inter", sans-serif;
+    color: var(--Dark-Text);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.about-me-section {
+    background-color: var(--Light-Text);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 12px var(--Dark-Grey, #666666);
+    margin-bottom: 1rem;
+    transition: 0.5s ease;
+}
+
+.about-me-section:hover {
+    background-color: var(--Mustard);
+    box-shadow: 5px 5px 12px wheat;
+}
+
+.about-me-table-uni {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+}
+
+.about-me-table-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.about-me-table-uni-title {
+    grid-area: 1 / 1 / 4 / 2;
+}
+
+.about-me-table-uni-uni {
+    grid-area: 1 / 2 / 2 / 3;
+    justify-self: end;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: end;
+}
+
+.about-me-table-uni-degree {
+    grid-area: 2 / 2 / 3 / 3;
+    justify-self: end;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: end;
+}
+
+.about-me-table-uni-spec {
+    grid-area: 3 / 2 / 4 / 3;
+    justify-self: end;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: end;
+}
+
+.about-me-desc {
+    margin-top: 0.5rem;
+}
+
+.about-me-table-exp {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.about-me-table-exp-title {
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+.about-me-table-exp-startup {
+    grid-area: 1 / 2 / 2 / 3;
+    justify-self: end;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+}
+
+@media (max-width: 800px) {
+
 }
 
 .about-me-photo {
@@ -969,15 +1068,23 @@ html, body {
     box-shadow: 5px 5px 12px black;
     width: 1400px;
     min-height: 500px;
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
     background: var(--Light-Text, #D9D9D9);
     border-radius: 1rem;
     transition: 0.3s ease-in-out;
 }
 
 .project-full-header {
-    padding-top: 2rem;
+    padding-top: 1.3rem;
     margin-left: 5%;
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 800px) {
+    .project-full-header {
+        margin-right: 3rem;
+    }
 }
 
 .project-full-title {
@@ -1048,8 +1155,16 @@ html, body {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    margin-left: 2%;
+    margin-left: 1%;
     margin-top: 0.5rem;
+    transition: 0.2s ease-in-out;
+    padding: 10px;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.project-full-text:hover {
+    background: #d1d1d1;
 }
 
 .project-full-smaller-tittle {
@@ -1070,10 +1185,6 @@ html, body {
 }
 
 .project-full-smaller-tittle-github:hover {
-    color: var(--Light-Dark-Text, #5D5D5D);
-}
-
-.project-full-smaller-tittle-github:active {
     color: var(--Gold, #B57F02);
 }
 
@@ -1089,18 +1200,38 @@ html, body {
 }
 
 .project-full-line-right {
+    margin-top: 0.5rem;
     border-top-left-radius: 100%;
     border-bottom-left-radius: 100%;
     justify-self: end;
 }
 
-.project-full-return {
-    justify-self: end;
-    padding-top: 1rem;
-    padding-right: 1rem;
+.bottom-footer {
+    display: none;
 }
 
-.project-full-return > a {
+.project-full-return-top {
+    padding-top: 1rem;
+    margin-left: 1rem;
+}
+
+@media (max-width:800px) {
+    .bottom-footer {
+        display: block;
+    }
+
+    .project-full-return-top {
+        display: none;
+    }
+
+    .project-full-return-bottom {
+        padding-top: 1rem;
+        margin-right: 1rem;
+        justify-self: end;
+    }
+}
+
+.project-full-return-top > a, .project-full-return-bottom > a {
     font-family: "Inter", sans-serif;
     color: var(--Dark-Theme, #1B1B1B);
     text-decoration: none;
@@ -1109,7 +1240,7 @@ html, body {
     transition: 0.3s ease-in-out;
 }
 
-.project-full-return > a:hover {
+.project-full-return-top > a:hover {
     color: var(--Gold, #B57F02);
 }
 
@@ -1139,7 +1270,7 @@ html, body {
 .footer {
     width: 100%;
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     margin-bottom: 1rem;
 }
 
@@ -1376,10 +1507,57 @@ html, body {
     }
 
     .about-me-left {
-        transform: scale(0.9);
-        padding-top: 1rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-top: 1.5rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .about-me-name {
+        font-size: 1.5rem;
+        scale: 1;
+    }
+
+    .about-me-title {
+        font-size: 1.5rem;
+    }
+
+    .about-me-table-uni {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 1fr);
+    }
+
+    .about-me-table-uni-title {
+        grid-area: 1 / 1 / 2 / 2
+    }
+
+    .about-me-table-uni-uni {
+        grid-area: 2 / 1 / 3 / 2;
+        font-size: 1.1rem;
+    }
+
+    .about-me-table-uni-degree {
+        grid-area: 3 / 1 / 4 / 2;
+        font-size: 1.1rem;
+    }
+
+    .about-me-table-uni-spec {
+        grid-area: 4 / 1 / 5 / 2;
+        font-size: 1.1rem;
+    }
+
+    .about-me-table-exp {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, 1fr);
+    }
+
+    .about-me-table-exp-title {
+        grid-area: 1 / 1 / 2 / 2;
+
+    }
+
+    .about-me-table-exp-startup {
+        grid-area: 2 / 1 / 3 / 2;
+        font-size: 1.1rem;
     }
 
     .about-me-right {
