@@ -1282,6 +1282,13 @@ html, body {
     font-style: italic;
 }
 
+.footer > a > h1 {
+    display: inline;
+    font-weight: 200;
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
 .not-found {
     display: flex;
     flex-direction: column;

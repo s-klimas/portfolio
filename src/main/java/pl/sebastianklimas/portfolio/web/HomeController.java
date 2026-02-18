@@ -15,4 +15,9 @@ public class HomeController {
     public String aboutMe() {
         return "about-me";
     }
+
+    @GetMapping("/sebastian-klimas")
+    public String sebastianKlimas() {
+        return "about-me";
+    }
 }
