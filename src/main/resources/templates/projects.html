@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>👨‍💻S-Klimas | Portfolio🚀</title>
+    <title>👨‍💻Sebastian Klimas | Portfolio🚀</title>
     <link rel="stylesheet" href="../static/styles/style.css" th:href="@{/styles/style.css}">
     <script defer src="../static/scripts/common.js" th:src="@{/scripts/common.js}"></script>
 
@@ -18,6 +18,35 @@
     <link rel="icon" href="/static/favicon/favicon_96.ico" th:href="@{/favicon/favicon_96.ico}" sizes="96x96"/>
     <link rel="icon" href="/static/favicon/favicon_144.ico" th:href="@{/favicon/favicon_144.ico}" sizes="144x144"/>
 
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Sebastian Klimas",
+            "alternateName": [
+                "sebastian klimas"
+            ],
+            "url": "https://sebastianklimas.pl",
+            "image": "https://sebastianklimas.pl/img/sebastian.jpg",
+            "description": "Portfolio Sebastiana Klimasa. Projekty, umiejętności i historia.",
+            "sameAs": [
+                "https://www.linkedin.com/in/s-klimas/",
+                "https://github.com/s-klimas/"
+            ],
+            "jobTitle": "Java Developer / Backend Developer",
+            "alumniOf": {
+                "@type": "CollegeOrUniversity",
+                "name": "Uniwersytet Ekonomiczy w Krakowie"
+            },
+            "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "PL"
+            },
+            "knowsAbout": [
+                "Java", "SEO", "Spring", "GitHub", "AI"
+            ]
+        }
+    </script>
 </head>
 <body>
 <div class="header">
@@ -42,8 +71,8 @@
         </div>
     </div>
     <div class="header-left">
-        <p><a th:href="@{/}" class="header-left-text header-left-name">SEBASTIAN KLIMAS</a></p> <p><a th:href="@{/}" class="header-left-text header-left-position">&lt;BACKEND
-        DEVELOPER&gt;</a></p>
+        <p><a th:href="@{/}" class="header-left-text header-left-name"><h1>SEBASTIAN KLIMAS</h1></a></p>
+        <p><a th:href="@{/}" class="header-left-text header-left-position">&lt;BACKEND DEVELOPER&gt;</a></p>
     </div>
 </div>
 <div class="nav">
@@ -54,7 +83,7 @@
         <a class="nav-item nav-item-selected" href="#" th:href="@{/}">
             PROJECTS <span class="line"></span>
         </a>
-        <a class="nav-item" href="#" th:href="@{/about-me}">
+        <a class="nav-item" href="#" th:href="@{/sebastian-klimas}">
             ABOUT ME <span class="line"></span>
         </a>
     </div>
@@ -184,7 +213,7 @@
     </div>
 </div>
 <div class="footer">
-    <a>&copy;  2026 Created by Sebastian Klimas - All Rights Reserved.</a>
+    <a>&copy;  2026 Created by <h1>Sebastian Klimas</h1> - All Rights Reserved.</a>
 </div>
 </body>
 </html>

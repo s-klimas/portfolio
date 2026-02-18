@@ -1,0 +1,21 @@
+User-agent: *
+# Allow access to the profiling page that optimizes for the keywords
+Disallow: /cards
+Disallow: /cv
+Disallow: /files/
+Allow: /sebastian-klimas
+Allow: /about-me
+Allow: /projects
+Allow: /projects/recipes-manager
+Allow: /projects/coupon-calculator
+Allow: /projects/ai-guesser
+Allow: /projects/portfolio
+Allow: /skills
+Allow: /skills/java
+Allow: /skills/databases
+Allow: /skills/tools
+Allow: /skills/others
+Allow: /
+
+# Sitemap location
+Sitemap: https://sebastianklimas.pl/sitemap.xml
