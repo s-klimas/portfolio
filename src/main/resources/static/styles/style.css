@@ -61,6 +61,7 @@ html, body {
 .header-left-name {
     font-weight: 700;
     letter-spacing: 1px;
+    text-decoration: none;
 }
 
 .header-left-position {
@@ -703,7 +704,7 @@ html, body {
 
 .about-me-section:hover {
     background-color: var(--Mustard);
-    box-shadow: 5px 5px 12px wheat;
+    /*box-shadow: 5px 5px 12px wheat;*/
 }
 
 .about-me-table-uni {
