@@ -1,0 +1,23 @@
+[
+  {
+    "chunk_id": "ai-guesser__application_yaml__springAiOpenai",
+    "project": "ai-guesser",
+    "source_file": "src/main/resources/application.yaml",
+    "package": null,
+    "class_name": "application.yaml",
+    "class_type": "config",
+    "class_annotations": [],
+    "method_name": "springAiOpenai",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [],
+    "return_type": null,
+    "throws": [],
+    "description": "Główny plik konfiguracyjny aplikacji Spring Boot. Definiuje nazwę aplikacji (ai-guesser), klucz API OpenAI pobierany ze zmiennej środowiskowej OPENAI_API_KEY, model czatu ustawiony na gpt-5-nano oraz temperaturę generowania odpowiedzi równą 1.",
+    "code_snippet": "spring:\n  application:\n    name: ai-guesser\n  ai:\n    openai:\n      api-key: ${OPENAI_API_KEY}\n      chat:\n        options:\n          model: gpt-5-nano\n          temperature: 1",
+    "dependencies": ["OpenAI", "Spring AI"],
+    "tags": ["config", "yaml", "openai", "spring-ai", "gpt-5-nano", "api-key", "temperature", "application"],
+    "source_type": "config"
+  }
+]
