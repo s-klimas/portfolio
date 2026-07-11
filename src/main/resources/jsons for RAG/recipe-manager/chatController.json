@@ -1,0 +1,72 @@
+[
+  {
+    "chunk_id": "recipes-manager__ChatController__chat",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/ai/chat/ChatController.java",
+    "package": "pl.sebastianklimas.recipesmenager.ai.chat",
+    "class_name": "ChatController",
+    "class_type": "controller",
+    "class_annotations": ["@RestController", "@RequestMapping(\"/ai\")", "@AllArgsConstructor", "@Tag(name = \"AI Logic\")"],
+    "method_name": "chat",
+    "http_method": "GET",
+    "http_path": "/ai/chat",
+    "method_annotations": ["@GetMapping(\"/chat\")", "@Operation(summary = \"Sends user message to LLM (only for logged in users - allows AI tools to operate on database).\")"],
+    "parameters": [
+      { "name": "message", "type": "String", "annotation": "@RequestBody" }
+    ],
+    "return_type": "String",
+    "throws": [],
+    "description": "Endpoint przyjmuje wiadomość użytkownika i przekazuje ją do serwisu ChatService w celu przetworzenia przez model LLM. Przeznaczony dla zalogowanych użytkowników, co umożliwia narzędziom AI operowanie na bazie danych. Zwraca odpowiedź wygenerowaną przez model jako zwykły tekst.",
+    "code_snippet": "@GetMapping(\"/chat\")\n@Operation(summary = \"Sends user message to LLM (only for logged in users - allows AI tools to operate on database).\")\npublic String chat(\n        @Parameter(description = \"Users message.\")\n        @RequestBody String message\n) {\n    return chatService.chat(message);\n}",
+    "dependencies": ["ChatService"],
+    "tags": ["ai", "chat", "llm", "logged-in-user", "endpoint"],
+    "source_type": "endpoint"
+  },
+  {
+    "chunk_id": "recipes-manager__ChatController__assist",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/ai/chat/ChatController.java",
+    "package": "pl.sebastianklimas.recipesmenager.ai.chat",
+    "class_name": "ChatController",
+    "class_type": "controller",
+    "class_annotations": ["@RestController", "@RequestMapping(\"/ai\")", "@AllArgsConstructor", "@Tag(name = \"AI Logic\")"],
+    "method_name": "assist",
+    "http_method": "GET",
+    "http_path": "/ai/assist",
+    "method_annotations": ["@GetMapping(\"/assist\")", "@Operation(summary = \"Sends users message to LLM (for non logged users).\")"],
+    "parameters": [
+      { "name": "message", "type": "String", "annotation": "@RequestBody" }
+    ],
+    "return_type": "String",
+    "throws": [],
+    "description": "Endpoint przyjmuje wiadomość użytkownika niezalogowanego i przekazuje ją do serwisu ChatService metodą assist. Zwraca odpowiedź wygenerowaną przez model LLM jako zwykły tekst. Nie umożliwia operacji AI na bazie danych, w przeciwieństwie do endpointu /chat.",
+    "code_snippet": "@GetMapping(\"/assist\")\n@Operation(summary = \"Sends users message to LLM (for non logged users).\")\npublic String assist(\n        @Parameter(description = \"Users message.\")\n        @RequestBody String message\n) {\n    return chatService.assist(message);\n}",
+    "dependencies": ["ChatService"],
+    "tags": ["ai", "assist", "llm", "guest-user", "endpoint"],
+    "source_type": "endpoint"
+  },
+  {
+    "chunk_id": "recipes-manager__ChatController__imageToRecipe",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/ai/chat/ChatController.java",
+    "package": "pl.sebastianklimas.recipesmenager.ai.chat",
+    "class_name": "ChatController",
+    "class_type": "controller",
+    "class_annotations": ["@RestController", "@RequestMapping(\"/ai\")", "@AllArgsConstructor", "@Tag(name = \"AI Logic\")"],
+    "method_name": "imageToRecipe",
+    "http_method": "POST",
+    "http_path": "/ai/image-to-recipe",
+    "method_annotations": ["@PostMapping(\"/image-to-recipe\")", "@Operation(summary = \"Allows to send an image of the recipe with a message to LLM (only for logged in users - allows AI tools to operate on database).\")"],
+    "parameters": [
+      { "name": "file", "type": "MultipartFile", "annotation": "@RequestParam(\"file\")" },
+      { "name": "message", "type": "String", "annotation": "@RequestParam(\"message\")" }
+    ],
+    "return_type": "ResponseEntity<String>",
+    "throws": ["IOException"],
+    "description": "Endpoint przyjmuje przesłany plik obrazu przepisu wraz z wiadomością użytkownika i przekazuje je do serwisu ChatService w celu rozpoznania przepisu przez model LLM. W przypadku błędu odczytu strumienia pliku zwraca odpowiedź z kodem HTTP 500 wraz z komunikatem błędu. Dostępny tylko dla zalogowanych użytkowników, co pozwala narzędziom AI operować na bazie danych.",
+    "code_snippet": "@PostMapping(\"/image-to-recipe\")\n@Operation(summary = \"Allows to send an image of the recipe with a message to LLM (only for logged in users - allows AI tools to operate on database).\")\npublic ResponseEntity<String> imageToRecipe(\n        @Parameter(description = \"Image od the recipe.\")\n        @RequestParam(\"file\") MultipartFile file,\n        @Parameter(description = \"Users message.\")\n        @RequestParam(\"message\") String message\n) {\n    try (InputStream inputStream = file.getInputStream()) {\n        var response = chatService.imageToRecipe(inputStream, file.getContentType(), message);\n        return ResponseEntity.ok(response);\n    } catch (IOException e) {\n        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(\"Error uploading image\");\n    }\n}",
+    "dependencies": ["ChatService", "MultipartFile"],
+    "tags": ["ai", "image-to-recipe", "llm", "file-upload", "logged-in-user", "endpoint"],
+    "source_type": "endpoint"
+  }
+]
