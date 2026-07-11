@@ -1,0 +1,46 @@
+[
+  {
+    "chunk_id": "ai-guesser__ChatController__chat",
+    "project": "ai-guesser",
+    "source_file": "src/main/java/pl/sebastianklimas/aiguesser/controller/ChatController.java",
+    "package": "pl.sebastianklimas.aiguesser.controller",
+    "class_name": "ChatController",
+    "class_type": "controller",
+    "class_annotations": ["@RestController", "@Tag(name = \"Chat controller\")"],
+    "method_name": "chat",
+    "http_method": "POST",
+    "http_path": "/ask",
+    "method_annotations": ["@PostMapping(\"/ask\")", "@Operation(summary = \"Allows to ask chat a question about a word\")"],
+    "parameters": [
+      { "name": "gr", "type": "GameRequest", "annotation": "@RequestBody" }
+    ],
+    "return_type": "ResponseEntity<Response>",
+    "throws": [],
+    "description": "Endpoint przyjmujący pytanie gracza dotyczące zgadywanego słowa. Deleguje przetwarzanie do ChatService, przekazując wiadomość oraz aktualny stan gry, a następnie zwraca odpowiedź AI.",
+    "code_snippet": "@PostMapping(\"/ask\")\n@Operation(summary = \"Allows to ask chat a question about a word\")\npublic ResponseEntity<Response> chat(@RequestBody GameRequest gr) {\n    return ResponseEntity.ok(chatService.ask(gr.getMessage(), gr.getGame()));\n}",
+    "dependencies": ["ChatService", "GameRequest", "Response"],
+    "tags": ["chat", "ask", "game", "question", "AI", "endpoint"],
+    "source_type": "endpoint"
+  },
+  {
+    "chunk_id": "ai-guesser__ChatController__startGame",
+    "project": "ai-guesser",
+    "source_file": "src/main/java/pl/sebastianklimas/aiguesser/controller/ChatController.java",
+    "package": "pl.sebastianklimas.aiguesser.controller",
+    "class_name": "ChatController",
+    "class_type": "controller",
+    "class_annotations": ["@RestController", "@Tag(name = \"Chat controller\")"],
+    "method_name": "startGame",
+    "http_method": "GET",
+    "http_path": "/new-game",
+    "method_annotations": ["@GetMapping(\"/new-game\")", "@Operation(summary = \"Returns a word from chat, that player has to guess\")"],
+    "parameters": [],
+    "return_type": "ResponseEntity<Game>",
+    "throws": [],
+    "description": "Endpoint inicjujący nową grę. Wywołuje ChatService w celu wygenerowania przez AI słowa do odgadnięcia i zwraca obiekt Game zawierający dane nowej sesji gry.",
+    "code_snippet": "@GetMapping(\"/new-game\")\n@Operation(summary = \"Returns a word from chat, that player has to guess\")\npublic ResponseEntity<Game> startGame() {\n    return ResponseEntity.ok(chatService.startGame());\n}",
+    "dependencies": ["ChatService", "Game"],
+    "tags": ["game", "new-game", "start", "AI", "endpoint"],
+    "source_type": "endpoint"
+  }
+]
