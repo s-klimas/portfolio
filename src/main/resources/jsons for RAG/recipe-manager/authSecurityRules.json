@@ -1,0 +1,25 @@
+[
+  {
+    "chunk_id": "recipes-manager__AuthSecurityRules__configure",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/auth/AuthSecurityRules.java",
+    "package": "pl.sebastianklimas.recipesmenager.auth",
+    "class_name": "AuthSecurityRules",
+    "class_type": "config",
+    "class_annotations": ["@Component"],
+    "method_name": "configure",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": ["@Override"],
+    "parameters": [
+      { "name": "registry", "type": "AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry", "annotation": null }
+    ],
+    "return_type": "void",
+    "throws": [],
+    "description": "Metoda implementuje interfejs SecurityRules i konfiguruje reguły autoryzacji Spring Security, definiując które endpointy są publicznie dostępne bez uwierzytelnienia. Zezwala na dostęp bez logowania do endpointów: GET /ai/assist, POST /users, POST /auth/login oraz POST /auth/refresh.",
+    "code_snippet": "@Override\npublic void configure(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry) {\n    registry\n            .requestMatchers(HttpMethod.GET, \"/ai/assist\").permitAll()\n            .requestMatchers(HttpMethod.POST, \"/users\").permitAll()\n            .requestMatchers(HttpMethod.POST, \"/auth/login\").permitAll()\n            .requestMatchers(HttpMethod.POST, \"/auth/refresh\").permitAll();\n}",
+    "dependencies": ["SecurityRules", "HttpSecurity", "AuthorizeHttpRequestsConfigurer"],
+    "tags": ["security", "authorization", "permit-all", "configuration", "spring-security"],
+    "source_type": "config"
+  }
+]
