@@ -1,0 +1,23 @@
+[
+  {
+    "chunk_id": "recipes-manager__ChatConfig__chatMemory",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/config/ai/ChatConfig.java",
+    "package": "pl.sebastianklimas.recipesmenager.config.ai",
+    "class_name": "ChatConfig",
+    "class_type": "config",
+    "class_annotations": ["@Configuration"],
+    "method_name": "chatMemory",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": ["@Bean"],
+    "parameters": [],
+    "return_type": "ChatMemory",
+    "throws": [],
+    "description": "Bean konfiguracyjny tworzy instancję pamięci rozmowy typu ChatMemory opartą o MessageWindowChatMemory, ograniczoną do maksymalnie 5 przechowywanych wiadomości. Bean ten jest wykorzystywany do budowy klienta ChatClient w celu utrzymania kontekstu rozmowy z użytkownikiem.",
+    "code_snippet": "@Bean\npublic ChatMemory chatMemory() {\n    return MessageWindowChatMemory.builder()\n            .maxMessages(5)\n            .build();\n}",
+    "dependencies": ["MessageWindowChatMemory"],
+    "tags": ["configuration", "bean", "chat-memory", "ai"],
+    "source_type": "config"
+  }
+]
