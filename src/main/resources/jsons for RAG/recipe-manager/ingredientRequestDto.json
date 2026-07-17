@@ -1,0 +1,27 @@
+[
+  {
+    "chunk_id": "recipes-manager__IngredientRequestDto__class",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/recipes/ingredients/dtos/IngredientRequestDto.java",
+    "package": "pl.sebastianklimas.recipesmenager.recipes.ingredients.dtos",
+    "class_name": "IngredientRequestDto",
+    "class_type": "entity",
+    "class_annotations": ["@Data"],
+    "method_name": null,
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "name", "type": "String", "annotation": "@NotBlank, @Schema(name = \"name\", example = \"Milk\", description = \"Ingredient name\")" },
+      { "name": "count", "type": "BigDecimal", "annotation": "@Schema(name = \"count\", example = \"0.5\", description = \"Count of ingredients\")" },
+      { "name": "unit", "type": "String", "annotation": "@NotBlank, @Schema(name = \"unit\", example = \"l\", description = \"Ingredient unit\")" }
+    ],
+    "return_type": null,
+    "throws": [],
+    "description": "Klasa DTO reprezentująca dane żądania dotyczące pojedynczego składnika przepisu, zawierająca nazwę składnika, jego ilość (jako BigDecimal) oraz jednostkę miary. Pola name i unit są wymagane i nie mogą być puste. Adnotacja @Data generuje gettery, settery, equals, hashCode i toString.",
+    "code_snippet": "@Data\npublic class IngredientRequestDto {\n    @NotBlank\n    @Schema(name = \"name\", example = \"Milk\", description = \"Ingredient name\")\n    private String name;\n    @Schema(name = \"count\", example = \"0.5\", description = \"Count of ingredients\")\n    private BigDecimal count;\n    @NotBlank\n    @Schema(name = \"unit\", example = \"l\", description = \"Ingredient unit\")\n    private String unit;\n}",
+    "dependencies": ["BigDecimal"],
+    "tags": ["dto", "ingredient", "request", "validation"],
+    "source_type": "entity"
+  }
+]
