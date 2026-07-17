@@ -1,0 +1,31 @@
+[
+  {
+    "chunk_id": "recipes-manager__Ingredient__class",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/recipes/ingredients/Ingredient.java",
+    "package": "pl.sebastianklimas.recipesmenager.recipes.ingredients",
+    "class_name": "Ingredient",
+    "class_type": "entity",
+    "class_annotations": ["@Getter", "@Setter", "@Entity", "@Table(name = \"ingredients\")"],
+    "method_name": null,
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "id", "type": "Long", "annotation": "@Id, @GeneratedValue(strategy = GenerationType.IDENTITY), @Column(name = \"id\")" },
+      { "name": "recipe", "type": "Recipe", "annotation": "@ManyToOne, @JoinColumn(name = \"recipe_id\")" },
+      { "name": "name", "type": "String", "annotation": "@Column(name = \"name\")" },
+      { "name": "count", "type": "BigDecimal", "annotation": "@Column(name = \"count\")" },
+      { "name": "unit", "type": "String", "annotation": "@Column(name = \"unit\")" },
+      { "name": "createdAt", "type": "LocalDateTime", "annotation": "@Column(name = \"created_at\")" },
+      { "name": "updatedAt", "type": "LocalDateTime", "annotation": "@Column(name = \"updated_at\")" }
+    ],
+    "return_type": null,
+    "throws": [],
+    "description": "Encja JPA reprezentująca tabelę 'ingredients' w bazie danych, przechowującą dane pojedynczego składnika przepisu: identyfikator, powiązany przepis (relacja wiele-do-jednego), nazwę, ilość, jednostkę miary oraz znaczniki czasu utworzenia i ostatniej aktualizacji. Znaczniki czasu są automatycznie ustawiane przez metody cyklu życia @PrePersist i @PreUpdate, a metoda toString jest nadpisana w celu zwrócenia czytelnej reprezentacji tekstowej składnika.",
+    "code_snippet": "@Getter\n@Setter\n@Entity\n@Table(name = \"ingredients\")\npublic class Ingredient {\n\n    @Id\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\n    @Column(name = \"id\")\n    private Long id;\n\n    @ManyToOne\n    @JoinColumn(name = \"recipe_id\")\n    private Recipe recipe;\n\n    @Column(name = \"name\")\n    private String name;\n\n    @Column(name = \"count\")\n    private BigDecimal count;\n\n    @Column(name = \"unit\")\n    private String unit;\n\n    @Column(name = \"created_at\")\n    private LocalDateTime createdAt;\n\n    @Column(name = \"updated_at\")\n    private LocalDateTime updatedAt;\n\n    public Ingredient() {\n    }\n\n    @PrePersist\n    public void onPrePersist() {\n        LocalDateTime now = LocalDateTime.now();\n        this.createdAt = now;\n        this.updatedAt = now;\n    }\n\n    @PreUpdate\n    public void onPreUpdate() {\n        this.updatedAt = LocalDateTime.now();\n    }\n\n    @Override\n    public String toString() {\n        return name + \" \" + count.toString() + \" \" + unit;\n    }\n}",
+    "dependencies": ["Recipe"],
+    "tags": ["entity", "jpa", "ingredient", "table-schema", "database"],
+    "source_type": "entity"
+  }
+]
