@@ -1,0 +1,23 @@
+[
+  {
+    "chunk_id": "recipes-manager__IngredientRepository__interface",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/recipes/ingredients/IngredientRepository.java",
+    "package": "pl.sebastianklimas.recipesmenager.recipes.ingredients",
+    "class_name": "IngredientRepository",
+    "class_type": "repository",
+    "class_annotations": [],
+    "method_name": null,
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [],
+    "return_type": null,
+    "throws": [],
+    "description": "Interfejs repozytorium Spring Data JPA dla encji Ingredient, rozszerzający JpaRepository i dziedziczący standardowe operacje CRUD (zapisywanie, wyszukiwanie, usuwanie) dla składników z kluczem głównym typu Long. Nie definiuje żadnych dodatkowych metod zapytań.",
+    "code_snippet": "public interface IngredientRepository extends JpaRepository<Ingredient, Long> {\n}",
+    "dependencies": ["JpaRepository", "Ingredient"],
+    "tags": ["repository", "jpa", "ingredient", "crud"],
+    "source_type": "repository"
+  }
+]
