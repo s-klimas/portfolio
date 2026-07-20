@@ -1,0 +1,26 @@
+[
+  {
+    "chunk_id": "recipes-manager__LoginResponseDto__class",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/auth/dto/LoginResponseDto.java",
+    "package": "pl.sebastianklimas.recipesmenager.auth.dto",
+    "class_name": "LoginResponseDto",
+    "class_type": "entity",
+    "class_annotations": ["@AllArgsConstructor", "@Getter"],
+    "method_name": null,
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "accessToken", "type": "Jwt", "annotation": "@Schema(name = \"accessToken\", description = \"Access token\")" },
+      { "name": "refreshToken", "type": "Jwt", "annotation": "@Schema(name = \"refreshToken\", description = \"Refresh token\")" }
+    ],
+    "return_type": null,
+    "throws": [],
+    "description": "Klasa DTO reprezentująca odpowiedź zwracaną po pomyślnym zalogowaniu użytkownika, zawierająca token dostępowy oraz token odświeżający, oba typu Jwt. Adnotacja @Getter generuje gettery dla obu pól, a @AllArgsConstructor tworzy konstruktor przyjmujący oba tokeny jako argumenty.",
+    "code_snippet": "@AllArgsConstructor\n@Getter\npublic class LoginResponseDto {\n    @Schema(name = \"accessToken\", description = \"Access token\")\n    private Jwt accessToken;\n    @Schema(name = \"refreshToken\", description = \"Refresh token\")\n    private Jwt refreshToken;\n}",
+    "dependencies": ["Jwt"],
+    "tags": ["dto", "login", "auth", "response", "jwt"],
+    "source_type": "entity"
+  }
+]
