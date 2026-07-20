@@ -1,0 +1,26 @@
+[
+  {
+    "chunk_id": "recipes-manager__LoginRequestDto__class",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/auth/dto/LoginRequestDto.java",
+    "package": "pl.sebastianklimas.recipesmenager.auth.dto",
+    "class_name": "LoginRequestDto",
+    "class_type": "entity",
+    "class_annotations": ["@Data", "@AllArgsConstructor"],
+    "method_name": null,
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "email", "type": "String", "annotation": "@NotBlank(message = \"Email is required\"), @Email, @Schema(name = \"email\", example = \"admin@example.com\", description = \"User's email\")" },
+      { "name": "password", "type": "String", "annotation": "@NotBlank(message = \"Password is required\"), @Schema(name = \"password\", example = \"adminpass\", description = \"User's password\")" }
+    ],
+    "return_type": null,
+    "throws": [],
+    "description": "Klasa DTO reprezentująca dane żądania logowania użytkownika, zawierająca pola email oraz password. Pole email musi być poprawnym adresem email i nie może być puste, a pole password jest wymagane i nie może być puste. Adnotacja @Data generuje gettery, settery, equals, hashCode oraz toString, natomiast @AllArgsConstructor tworzy konstruktor przyjmujący wszystkie pola.",
+    "code_snippet": "@Data\n@AllArgsConstructor\npublic class LoginRequestDto {\n    @NotBlank(message = \"Email is required\")\n    @Email\n    @Schema(name = \"email\", example = \"admin@example.com\", description = \"User's email\")\n    private String email;\n\n    @NotBlank(message = \"Password is required\")\n    @Schema(name = \"password\", example = \"adminpass\", description = \"User's password\")\n    private String password;\n}",
+    "dependencies": [],
+    "tags": ["dto", "login", "auth", "validation", "request"],
+    "source_type": "entity"
+  }
+]
