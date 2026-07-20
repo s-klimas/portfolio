@@ -1,0 +1,25 @@
+[
+  {
+    "chunk_id": "recipes-manager__JwtResponseDto__class",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/config/jwt/JwtResponseDto.java",
+    "package": "pl.sebastianklimas.recipesmenager.config.jwt",
+    "class_name": "JwtResponseDto",
+    "class_type": "entity",
+    "class_annotations": ["@Data", "@AllArgsConstructor"],
+    "method_name": null,
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "token", "type": "String", "annotation": null }
+    ],
+    "return_type": null,
+    "throws": [],
+    "description": "Klasa DTO reprezentująca odpowiedź zawierającą pojedynczy token JWT (najczęściej access token) zwracaną klientowi po logowaniu lub odświeżeniu tokena. Adnotacja @Data generuje gettery, settery, equals, hashCode i toString, a @AllArgsConstructor tworzy konstruktor przyjmujący pole token.",
+    "code_snippet": "@Data\n@AllArgsConstructor\npublic class JwtResponseDto {\n    private String token;\n}",
+    "dependencies": [],
+    "tags": ["dto", "jwt", "response", "token"],
+    "source_type": "entity"
+  }
+]
