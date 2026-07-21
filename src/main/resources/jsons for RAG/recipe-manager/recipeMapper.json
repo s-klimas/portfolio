@@ -1,0 +1,72 @@
+[
+  {
+    "chunk_id": "recipes-manager__RecipeMapper__toDto",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/recipes/RecipeMapper.java",
+    "package": "pl.sebastianklimas.recipesmenager.recipes",
+    "class_name": "RecipeMapper",
+    "class_type": "config",
+    "class_annotations": ["@Mapper(componentModel = \"spring\")"],
+    "method_name": "toDto",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "recipe", "type": "Recipe", "annotation": null }
+    ],
+    "return_type": "RecipeResponseDto",
+    "throws": [],
+    "description": "Metoda interfejsu MapStruct definiująca automatyczne mapowanie encji Recipe na obiekt RecipeResponseDto. Implementacja jest generowana automatycznie przez MapStruct podczas kompilacji na podstawie odpowiadających sobie pól.",
+    "code_snippet": "RecipeResponseDto toDto(Recipe recipe);",
+    "dependencies": ["Recipe", "RecipeResponseDto"],
+    "tags": ["mapper", "mapstruct", "recipe", "dto-mapping"],
+    "source_type": "service"
+  },
+  {
+    "chunk_id": "recipes-manager__RecipeMapper__toEntity",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/recipes/RecipeMapper.java",
+    "package": "pl.sebastianklimas.recipesmenager.recipes",
+    "class_name": "RecipeMapper",
+    "class_type": "config",
+    "class_annotations": ["@Mapper(componentModel = \"spring\")"],
+    "method_name": "toEntity",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": ["@Mapping(target = \"instructions\", source = \"instructions\")"],
+    "parameters": [
+      { "name": "recipeDto", "type": "RecipeRequestDto", "annotation": null }
+    ],
+    "return_type": "Recipe",
+    "throws": [],
+    "description": "Metoda interfejsu MapStruct definiująca automatyczne mapowanie obiektu RecipeRequestDto na encję Recipe, z jawnym wskazaniem mapowania pola instructions. Implementacja jest generowana automatycznie przez MapStruct podczas kompilacji.",
+    "code_snippet": "@Mapping(target = \"instructions\", source = \"instructions\")\nRecipe toEntity(RecipeRequestDto recipeDto);",
+    "dependencies": ["RecipeRequestDto", "Recipe"],
+    "tags": ["mapper", "mapstruct", "recipe", "dto-mapping"],
+    "source_type": "service"
+  },
+  {
+    "chunk_id": "recipes-manager__RecipeMapper__update",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/recipes/RecipeMapper.java",
+    "package": "pl.sebastianklimas.recipesmenager.recipes",
+    "class_name": "RecipeMapper",
+    "class_type": "config",
+    "class_annotations": ["@Mapper(componentModel = \"spring\")"],
+    "method_name": "update",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": ["@Mapping(target = \"id\", ignore = true)", "@Mapping(target = \"instructions\", source = \"instructions\")"],
+    "parameters": [
+      { "name": "recipeDto", "type": "RecipeRequestDto", "annotation": null },
+      { "name": "recipe", "type": "Recipe", "annotation": "@MappingTarget" }
+    ],
+    "return_type": "void",
+    "throws": [],
+    "description": "Metoda interfejsu MapStruct definiująca aktualizację istniejącej encji Recipe na podstawie danych z RecipeRequestDto, mapując dane bezpośrednio do przekazanego obiektu docelowego (@MappingTarget). Pole id jest jawnie pomijane podczas aktualizacji, aby zachować oryginalny identyfikator przepisu.",
+    "code_snippet": "@Mapping(target = \"id\", ignore = true)\n@Mapping(target = \"instructions\", source = \"instructions\")\nvoid update(RecipeRequestDto recipeDto, @MappingTarget Recipe recipe);",
+    "dependencies": ["RecipeRequestDto", "Recipe"],
+    "tags": ["mapper", "mapstruct", "recipe", "update", "dto-mapping"],
+    "source_type": "service"
+  }
+]
