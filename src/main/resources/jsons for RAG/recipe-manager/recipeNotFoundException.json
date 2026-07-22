@@ -1,0 +1,25 @@
+[
+  {
+    "chunk_id": "recipes-manager__RecipeNotFoundException__constructor",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/recipes/exceptions/RecipeNotFoundException.java",
+    "package": "pl.sebastianklimas.recipesmenager.recipes.exceptions",
+    "class_name": "RecipeNotFoundException",
+    "class_type": "entity",
+    "class_annotations": [],
+    "method_name": "RecipeNotFoundException (constructor)",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "message", "type": "String", "annotation": null }
+    ],
+    "return_type": "RecipeNotFoundException",
+    "throws": [],
+    "description": "Niestandardowy wyjątek typu RuntimeException zgłaszany, gdy przepis o podanym identyfikatorze nie zostanie odnaleziony w bazie danych. Konstruktor przyjmuje komunikat błędu i przekazuje go do klasy nadrzędnej RuntimeException.",
+    "code_snippet": "public RecipeNotFoundException(String message) {\n    super(message);\n}",
+    "dependencies": ["RuntimeException"],
+    "tags": ["exception", "recipe", "not-found", "runtime-exception"],
+    "source_type": "entity"
+  }
+]
