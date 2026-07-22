@@ -1,0 +1,50 @@
+[
+  {
+    "chunk_id": "recipes-manager__RecipeRepository__findAllByUserId",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/recipes/RecipeRepository.java",
+    "package": "pl.sebastianklimas.recipesmenager.recipes",
+    "class_name": "RecipeRepository",
+    "class_type": "repository",
+    "class_annotations": [],
+    "method_name": "findAllByUserId",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "userId", "type": "Long", "annotation": null }
+    ],
+    "return_type": "Set<Recipe>",
+    "throws": [],
+    "description": "Metoda repozytorium Spring Data JPA generowana automatycznie na podstawie nazwy, wyszukująca wszystkie przepisy należące do użytkownika o podanym identyfikatorze. Zwraca zbiór (Set) znalezionych przepisów.",
+    "code_snippet": "Set<Recipe> findAllByUserId(Long userId);",
+    "dependencies": ["Recipe"],
+    "tags": ["repository", "jpa", "recipe", "query-method", "user"],
+    "source_type": "repository"
+  },
+  {
+    "chunk_id": "recipes-manager__RecipeRepository__findByUserOrVisibility",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/recipes/RecipeRepository.java",
+    "package": "pl.sebastianklimas.recipesmenager.recipes",
+    "class_name": "RecipeRepository",
+    "class_type": "repository",
+    "class_annotations": [],
+    "method_name": "findByUserOrVisibility",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "user", "type": "User", "annotation": null },
+      { "name": "visibility", "type": "String", "annotation": null },
+      { "name": "pageable", "type": "Pageable", "annotation": null }
+    ],
+    "return_type": "Page<Recipe>",
+    "throws": [],
+    "description": "Metoda repozytorium Spring Data JPA generowana automatycznie na podstawie nazwy, wyszukująca stronicowaną listę przepisów, które albo należą do podanego użytkownika, albo posiadają określoną wartość widoczności (visibility). Zwraca wynik jako obiekt Page z obsługą paginacji.",
+    "code_snippet": "Page<Recipe> findByUserOrVisibility(User user, String visibility, Pageable pageable);",
+    "dependencies": ["Recipe", "User", "Pageable", "Page"],
+    "tags": ["repository", "jpa", "recipe", "query-method", "pagination", "visibility"],
+    "source_type": "repository"
+  }
+]
