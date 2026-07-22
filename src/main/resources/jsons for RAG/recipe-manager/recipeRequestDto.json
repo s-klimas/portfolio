@@ -1,0 +1,27 @@
+[
+  {
+    "chunk_id": "recipes-manager__RecipeRequestDto__class",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/recipes/dtos/RecipeRequestDto.java",
+    "package": "pl.sebastianklimas.recipesmenager.recipes.dtos",
+    "class_name": "RecipeRequestDto",
+    "class_type": "entity",
+    "class_annotations": ["@AllArgsConstructor", "@NoArgsConstructor", "@Data"],
+    "method_name": null,
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "name", "type": "String", "annotation": "@NotBlank(message = \"Name is required\"), @Schema(name = \"name\", example = \"Mom's recipe\", description = \"Recipe name\")" },
+      { "name": "instructions", "type": "String", "annotation": "@NotBlank(message = \"Instructions are required\"), @Schema(name = \"instructions\", example = \"Start with mixing all ingredients together...\", description = \"Instructions on how to make the recipe\")" },
+      { "name": "ingredients", "type": "Set<IngredientRequestDto>", "annotation": null }
+    ],
+    "return_type": null,
+    "throws": [],
+    "description": "Klasa DTO reprezentująca dane żądania tworzenia lub aktualizacji przepisu, zawierająca nazwę przepisu, instrukcje przygotowania oraz zbiór składników. Pola name i instructions są wymagane i nie mogą być puste. Adnotacje Lombok generują konstruktory bezargumentowy i pełny oraz gettery, settery, equals, hashCode i toString.",
+    "code_snippet": "@AllArgsConstructor\n@NoArgsConstructor\n@Data\npublic class RecipeRequestDto {\n    @NotBlank(message = \"Name is required\")\n    @Schema(name = \"name\", example = \"Mom's recipe\", description = \"Recipe name\")\n    private String name;\n    @NotBlank(message = \"Instructions are required\")\n    @Schema(name = \"instructions\", example = \"Start with mixing all ingredients together...\", description = \"Instructions on how to make the recipe\")\n    private String instructions;\n    private Set<IngredientRequestDto> ingredients;\n}",
+    "dependencies": ["IngredientRequestDto"],
+    "tags": ["dto", "recipe", "request", "validation"],
+    "source_type": "entity"
+  }
+]
