@@ -1,0 +1,25 @@
+[
+  {
+    "chunk_id": "recipes-manager__RoleService__getRole",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/roles/RoleService.java",
+    "package": "pl.sebastianklimas.recipesmenager.users.roles",
+    "class_name": "RoleService",
+    "class_type": "service",
+    "class_annotations": ["@AllArgsConstructor", "@Service"],
+    "method_name": "getRole",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "roleName", "type": "String", "annotation": null }
+    ],
+    "return_type": "UserRole",
+    "throws": ["RoleNotFoundException"],
+    "description": "Metoda wyszukuje rolę użytkownika w bazie danych na podstawie podanej nazwy roli za pomocą RoleRepository. Jeśli rola nie zostanie znaleziona (wynik null), zgłasza wyjątek RoleNotFoundException.",
+    "code_snippet": "public UserRole getRole(String roleName) {\n    UserRole role = roleRepository.findByName(roleName);\n    if (role == null) {\n        throw new RoleNotFoundException(\"Role is null.\");\n    }\n    return role;\n}",
+    "dependencies": ["RoleRepository", "UserRole", "RoleNotFoundException"],
+    "tags": ["role", "read", "validation"],
+    "source_type": "service"
+  }
+]
