@@ -1,0 +1,25 @@
+[
+  {
+    "chunk_id": "recipes-manager__DuplicateUserException__constructor",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/exceptions/DuplicateUserException.java",
+    "package": "pl.sebastianklimas.recipesmenager.users.exceptions",
+    "class_name": "DuplicateUserException",
+    "class_type": "entity",
+    "class_annotations": [],
+    "method_name": "DuplicateUserException (constructor)",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "message", "type": "String", "annotation": null }
+    ],
+    "return_type": "DuplicateUserException",
+    "throws": [],
+    "description": "Niestandardowy wyjątek typu RuntimeException zgłaszany, gdy podczas rejestracji nowego użytkownika okaże się, że użytkownik o podanym loginie lub adresie email już istnieje w systemie. Konstruktor przyjmuje komunikat błędu i przekazuje go do klasy nadrzędnej RuntimeException.",
+    "code_snippet": "public DuplicateUserException(String message) {\n    super(message);\n}",
+    "dependencies": ["RuntimeException"],
+    "tags": ["exception", "user", "duplicate", "runtime-exception"],
+    "source_type": "entity"
+  }
+]
