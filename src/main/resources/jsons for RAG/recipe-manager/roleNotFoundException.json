@@ -1,0 +1,25 @@
+[
+  {
+    "chunk_id": "recipes-manager__RoleNotFoundException__constructor",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/exceptions/RoleNotFoundException.java",
+    "package": "pl.sebastianklimas.recipesmenager.users.exceptions",
+    "class_name": "RoleNotFoundException",
+    "class_type": "entity",
+    "class_annotations": [],
+    "method_name": "RoleNotFoundException (constructor)",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "message", "type": "String", "annotation": null }
+    ],
+    "return_type": "RoleNotFoundException",
+    "throws": [],
+    "description": "Niestandardowy wyjątek typu RuntimeException zgłaszany, gdy poszukiwana rola użytkownika o podanej nazwie nie zostanie odnaleziona w systemie. Konstruktor przyjmuje komunikat błędu i przekazuje go do klasy nadrzędnej RuntimeException.",
+    "code_snippet": "public RoleNotFoundException(String message) {\n    super(message);\n}",
+    "dependencies": ["RuntimeException"],
+    "tags": ["exception", "role", "not-found", "runtime-exception"],
+    "source_type": "entity"
+  }
+]
