@@ -1,0 +1,27 @@
+[
+  {
+    "chunk_id": "recipes-manager__RegisterUserResponseDto__class",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/dto/RegisterUserResponseDto.java",
+    "package": "pl.sebastianklimas.recipesmenager.users.dto",
+    "class_name": "RegisterUserResponseDto",
+    "class_type": "entity",
+    "class_annotations": ["@AllArgsConstructor", "@Getter", "@Setter", "@NoArgsConstructor"],
+    "method_name": null,
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "id", "type": "Long", "annotation": "@Schema(name = \"id\", example = \"1\", description = \"User ID\")" },
+      { "name": "login", "type": "String", "annotation": "@Schema(name = \"login\", example = \"user1\", description = \"User login\")" },
+      { "name": "email", "type": "String", "annotation": "@Schema(name = \"email\", example = \"user@example.com\", description = \"User email\")" }
+    ],
+    "return_type": null,
+    "throws": [],
+    "description": "Klasa DTO reprezentująca odpowiedź zwracaną po pomyślnej rejestracji użytkownika, zawierająca identyfikator, login oraz adres email nowo utworzonego użytkownika. Adnotacje Lombok generują konstruktory bezargumentowy i pełny oraz gettery i settery dla wszystkich pól.",
+    "code_snippet": "@AllArgsConstructor\n@Getter\n@Setter\n@NoArgsConstructor\npublic class RegisterUserResponseDto {\n    @Schema(name = \"id\", example = \"1\", description = \"User ID\")\n    private Long id;\n    @Schema(name = \"login\", example = \"user1\", description = \"User login\")\n    private String login;\n    @Schema(name = \"email\", example = \"user@example.com\", description = \"User email\")\n    private String email;\n}",
+    "dependencies": [],
+    "tags": ["dto", "user", "registration", "response"],
+    "source_type": "entity"
+  }
+]
