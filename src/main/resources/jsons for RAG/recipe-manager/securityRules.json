@@ -1,0 +1,25 @@
+[
+  {
+    "chunk_id": "recipes-manager__SecurityRules__configure",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/config/security/SecurityRules.java",
+    "package": "pl.sebastianklimas.recipesmenager.config.security",
+    "class_name": "SecurityRules",
+    "class_type": "config",
+    "class_annotations": [],
+    "method_name": "configure",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "registry", "type": "AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry", "annotation": null }
+    ],
+    "return_type": "void",
+    "throws": [],
+    "description": "Metoda abstrakcyjna interfejsu SecurityRules definiująca kontrakt dla klas konfigurujących reguły autoryzacji HTTP w Spring Security. Implementacje tego interfejsu (np. AuthSecurityRules) rejestrują swoje reguły dostępu do endpointów poprzez modyfikację przekazanego rejestru dopasowań żądań.",
+    "code_snippet": "void configure(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry);",
+    "dependencies": ["HttpSecurity", "AuthorizeHttpRequestsConfigurer"],
+    "tags": ["security", "interface", "authorization", "spring-security", "strategy-pattern"],
+    "source_type": "config"
+  }
+]
