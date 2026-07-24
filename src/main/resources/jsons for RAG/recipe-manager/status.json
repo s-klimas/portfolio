@@ -1,0 +1,23 @@
+[
+  {
+    "chunk_id": "recipes-manager__Status__enum",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/Status.java",
+    "package": "pl.sebastianklimas.recipesmenager.users",
+    "class_name": "Status",
+    "class_type": "entity",
+    "class_annotations": [],
+    "method_name": null,
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [],
+    "return_type": null,
+    "throws": [],
+    "description": "Enum reprezentujący możliwe statusy konta użytkownika w systemie: ACTIVE (aktywne), INACTIVE (nieaktywne), SUSPENDED (zawieszone) oraz BANNED (zablokowane). Wykorzystywany w encji User oraz w UserDto do określenia bieżącego stanu konta użytkownika.",
+    "code_snippet": "public enum Status {\n    ACTIVE, INACTIVE, SUSPENDED, BANNED;\n}",
+    "dependencies": [],
+    "tags": ["enum", "status", "user", "account-state"],
+    "source_type": "entity"
+  }
+]
