@@ -1,0 +1,25 @@
+[
+  {
+    "chunk_id": "recipes-manager__SwaggerSecurityRules__configure",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/swagger/SwaggerSecurityRules.java",
+    "package": "pl.sebastianklimas.recipesmenager.swagger",
+    "class_name": "SwaggerSecurityRules",
+    "class_type": "config",
+    "class_annotations": ["@Component"],
+    "method_name": "configure",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": ["@Override"],
+    "parameters": [
+      { "name": "registry", "type": "AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry", "annotation": null }
+    ],
+    "return_type": "void",
+    "throws": [],
+    "description": "Metoda implementuje interfejs SecurityRules i konfiguruje reguły autoryzacji Spring Security, zezwalając na publiczny dostęp bez uwierzytelnienia do zasobów dokumentacji Swagger/OpenAPI: interfejsu użytkownika Swagger UI, strony swagger-ui.html oraz endpointów generujących dokumentację API (/v3/api-docs/**).",
+    "code_snippet": "@Override\npublic void configure(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry) {\n    registry\n            .requestMatchers(\"/swagger-ui/**\").permitAll()\n            .requestMatchers(\"/swagger-ui.html\").permitAll()\n            .requestMatchers(\"/v3/api-docs/**\").permitAll();\n}",
+    "dependencies": ["SecurityRules", "HttpSecurity", "AuthorizeHttpRequestsConfigurer"],
+    "tags": ["security", "swagger", "authorization", "permit-all", "spring-security"],
+    "source_type": "config"
+  }
+]
