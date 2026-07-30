@@ -1,0 +1,29 @@
+[
+  {
+    "chunk_id": "recipes-manager__UserDto__class",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/dto/UserDto.java",
+    "package": "pl.sebastianklimas.recipesmenager.users.dto",
+    "class_name": "UserDto",
+    "class_type": "entity",
+    "class_annotations": ["@AllArgsConstructor", "@Getter", "@Setter", "@NoArgsConstructor"],
+    "method_name": null,
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "id", "type": "Long", "annotation": "@Schema(name = \"id\", example = \"1\", description = \"User ID\")" },
+      { "name": "login", "type": "String", "annotation": "@Schema(name = \"login\", example = \"user1\", description = \"User login\")" },
+      { "name": "email", "type": "String", "annotation": "@Schema(name = \"email\", example = \"user@example.com\", description = \"User email\")" },
+      { "name": "status", "type": "String", "annotation": "@Schema(name = \"status\", examples = {\"ACTIVE\", \"INACTIVE\", \"SUSPENDED\", \"BANNED\"}, description = \"User status\")" },
+      { "name": "roles", "type": "List<String>", "annotation": "@Schema(name = \"roles\", examples = {\"USER\", \"ADMIN\"}, description = \"User roles\")" }
+    ],
+    "return_type": null,
+    "throws": [],
+    "description": "Klasa DTO reprezentująca pełne dane użytkownika zwracane klientowi, zawierająca identyfikator, login, email, status konta (np. ACTIVE, INACTIVE, SUSPENDED, BANNED) oraz listę ról przypisanych użytkownikowi (np. USER, ADMIN). Adnotacje Lombok generują konstruktory bezargumentowy i pełny oraz gettery i settery dla wszystkich pól.",
+    "code_snippet": "@AllArgsConstructor\n@Getter\n@Setter\n@NoArgsConstructor\npublic class UserDto {\n    @Schema(name = \"id\", example = \"1\", description = \"User ID\")\n    private Long id;\n    @Schema(name = \"login\", example = \"user1\", description = \"User login\")\n    private String login;\n    @Schema(name = \"email\", example = \"user@example.com\", description = \"User email\")\n    private String email;\n    @Schema(name = \"status\", examples = {\"ACTIVE\", \"INACTIVE\", \"SUSPENDED\", \"BANNED\"}, description = \"User status\")\n    private String status;\n    @Schema(name = \"roles\", examples = {\"USER\", \"ADMIN\"}, description = \"User roles\")\n    private List<String> roles;\n}",
+    "dependencies": [],
+    "tags": ["dto", "user", "response"],
+    "source_type": "entity"
+  }
+]
