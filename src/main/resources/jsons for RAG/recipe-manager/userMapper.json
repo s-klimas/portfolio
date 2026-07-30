@@ -1,0 +1,71 @@
+[
+  {
+    "chunk_id": "recipes-manager__UserMapper__toEntity",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/UserMapper.java",
+    "package": "pl.sebastianklimas.recipesmenager.users",
+    "class_name": "UserMapper",
+    "class_type": "config",
+    "class_annotations": ["@Mapper(componentModel = \"spring\")"],
+    "method_name": "toEntity",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "registerUserRequestDto", "type": "RegisterUserRequestDto", "annotation": null }
+    ],
+    "return_type": "User",
+    "throws": [],
+    "description": "Metoda interfejsu MapStruct definiująca automatyczne mapowanie obiektu RegisterUserRequestDto na encję User. Implementacja jest generowana automatycznie przez MapStruct podczas kompilacji na podstawie odpowiadających sobie pól.",
+    "code_snippet": "User toEntity(RegisterUserRequestDto registerUserRequestDto);",
+    "dependencies": ["RegisterUserRequestDto", "User"],
+    "tags": ["mapper", "mapstruct", "user", "dto-mapping"],
+    "source_type": "service"
+  },
+  {
+    "chunk_id": "recipes-manager__UserMapper__toRegisterUserResponseDto",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/UserMapper.java",
+    "package": "pl.sebastianklimas.recipesmenager.users",
+    "class_name": "UserMapper",
+    "class_type": "config",
+    "class_annotations": ["@Mapper(componentModel = \"spring\")"],
+    "method_name": "toRegisterUserResponseDto",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "user", "type": "User", "annotation": null }
+    ],
+    "return_type": "RegisterUserResponseDto",
+    "throws": [],
+    "description": "Metoda interfejsu MapStruct definiująca automatyczne mapowanie encji User na obiekt RegisterUserResponseDto, zwracany po pomyślnej rejestracji użytkownika. Implementacja jest generowana automatycznie przez MapStruct podczas kompilacji.",
+    "code_snippet": "RegisterUserResponseDto toRegisterUserResponseDto(User user);",
+    "dependencies": ["User", "RegisterUserResponseDto"],
+    "tags": ["mapper", "mapstruct", "user", "registration", "dto-mapping"],
+    "source_type": "service"
+  },
+  {
+    "chunk_id": "recipes-manager__UserMapper__toUserDto",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/UserMapper.java",
+    "package": "pl.sebastianklimas.recipesmenager.users",
+    "class_name": "UserMapper",
+    "class_type": "config",
+    "class_annotations": ["@Mapper(componentModel = \"spring\")"],
+    "method_name": "toUserDto",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": ["@Mapping(target = \"roles\", expression = \"java(user.getRolesNames())\")"],
+    "parameters": [
+      { "name": "user", "type": "User", "annotation": null }
+    ],
+    "return_type": "UserDto",
+    "throws": [],
+    "description": "Metoda interfejsu MapStruct definiująca mapowanie encji User na obiekt UserDto, z jawnym wskazaniem, że pole roles powinno być wypełnione poprzez wywołanie metody getRolesNames() na obiekcie użytkownika (wyrażenie Java). Implementacja jest generowana automatycznie przez MapStruct podczas kompilacji.",
+    "code_snippet": "@Mapping(target = \"roles\", expression = \"java(user.getRolesNames())\")\nUserDto toUserDto(User user);",
+    "dependencies": ["User", "UserDto"],
+    "tags": ["mapper", "mapstruct", "user", "roles", "dto-mapping"],
+    "source_type": "service"
+  }
+]
