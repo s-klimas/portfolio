@@ -1,0 +1,25 @@
+[
+  {
+    "chunk_id": "recipes-manager__UserNotFoundException__constructor",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/exceptions/UserNotFoundException.java",
+    "package": "pl.sebastianklimas.recipesmenager.users.exceptions",
+    "class_name": "UserNotFoundException",
+    "class_type": "entity",
+    "class_annotations": [],
+    "method_name": "UserNotFoundException (constructor)",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "message", "type": "String", "annotation": null }
+    ],
+    "return_type": "UserNotFoundException",
+    "throws": [],
+    "description": "Niestandardowy wyjątek typu RuntimeException zgłaszany, gdy poszukiwany użytkownik o podanym identyfikatorze lub adresie email nie zostanie odnaleziony w bazie danych. Konstruktor przyjmuje komunikat błędu i przekazuje go do klasy nadrzędnej RuntimeException.",
+    "code_snippet": "public UserNotFoundException(String message) {\n    super(message);\n}",
+    "dependencies": ["RuntimeException"],
+    "tags": ["exception", "user", "not-found", "runtime-exception"],
+    "source_type": "entity"
+  }
+]
