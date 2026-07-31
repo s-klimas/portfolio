@@ -1,0 +1,141 @@
+[
+  {
+    "chunk_id": "recipes-manager__UserService__registerUser",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/UserService.java",
+    "package": "pl.sebastianklimas.recipesmenager.users",
+    "class_name": "UserService",
+    "class_type": "service",
+    "class_annotations": ["@AllArgsConstructor", "@Service"],
+    "method_name": "registerUser",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "requestDto", "type": "RegisterUserRequestDto", "annotation": null }
+    ],
+    "return_type": "RegisterUserResponseDto",
+    "throws": ["DuplicateUserException"],
+    "description": "Metoda rejestruje nowego użytkownika, sprawdzając najpierw czy adres email nie jest już zajęty, w przeciwnym razie rzuca wyjątek DuplicateUserException. Haszuje hasło użytkownika, ustawia status konta jako aktywny, przypisuje domyślną rolę USER, zapisuje użytkownika w bazie danych i zwraca dane rejestracji jako RegisterUserResponseDto.",
+    "code_snippet": "public RegisterUserResponseDto registerUser(RegisterUserRequestDto requestDto) {\n    if (userRepository.existsByEmail(requestDto.getEmail())) {\n        throw new DuplicateUserException(\"Email is already registered.\");\n    }\n\n    User user = userMapper.toEntity(requestDto);\n    user.setPassword(passwordEncoder.encode(requestDto.getPassword()));\n    user.setStatus(Status.ACTIVE.toString());\n\n    UserRole role = roleService.getRole(Role.USER.toString());\n    user.addRole(role);\n\n    userRepository.save(user);\n\n    return userMapper.toRegisterUserResponseDto(user);\n}",
+    "dependencies": ["UserRepository", "UserMapper", "PasswordEncoder", "RoleService", "DuplicateUserException", "Status", "Role"],
+    "tags": ["user", "registration", "create", "password-hashing"],
+    "source_type": "service"
+  },
+  {
+    "chunk_id": "recipes-manager__UserService__getUser",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/UserService.java",
+    "package": "pl.sebastianklimas.recipesmenager.users",
+    "class_name": "UserService",
+    "class_type": "service",
+    "class_annotations": ["@AllArgsConstructor", "@Service"],
+    "method_name": "getUser",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "id", "type": "Long", "annotation": null }
+    ],
+    "return_type": "UserDto",
+    "throws": ["UserNotFoundException"],
+    "description": "Metoda pobiera dane użytkownika na podstawie jego identyfikatora, wykorzystując prywatną metodę findUserById, a następnie mapuje encję User na obiekt UserDto za pomocą UserMapper.",
+    "code_snippet": "public UserDto getUser(Long id) {\n    return userMapper.toUserDto(findUserById(id));\n}",
+    "dependencies": ["UserMapper"],
+    "tags": ["user", "read"],
+    "source_type": "service"
+  },
+  {
+    "chunk_id": "recipes-manager__UserService__deleteUser",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/UserService.java",
+    "package": "pl.sebastianklimas.recipesmenager.users",
+    "class_name": "UserService",
+    "class_type": "service",
+    "class_annotations": ["@AllArgsConstructor", "@Service"],
+    "method_name": "deleteUser",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "userId", "type": "Long", "annotation": null }
+    ],
+    "return_type": "void",
+    "throws": ["UserNotFoundException"],
+    "description": "Metoda usuwa użytkownika o podanym identyfikatorze z bazy danych, wyszukując go najpierw za pomocą prywatnej metody findUserById, która rzuca wyjątek jeśli użytkownik nie istnieje.",
+    "code_snippet": "public void deleteUser(Long userId) {\n    userRepository.delete(findUserById(userId));\n}",
+    "dependencies": ["UserRepository"],
+    "tags": ["user", "delete"],
+    "source_type": "service"
+  },
+  {
+    "chunk_id": "recipes-manager__UserService__changePassword",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/UserService.java",
+    "package": "pl.sebastianklimas.recipesmenager.users",
+    "class_name": "UserService",
+    "class_type": "service",
+    "class_annotations": ["@AllArgsConstructor", "@Service"],
+    "method_name": "changePassword",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "userId", "type": "Long", "annotation": null },
+      { "name": "request", "type": "ChangePasswordRequestDto", "annotation": null }
+    ],
+    "return_type": "void",
+    "throws": ["AccessDeniedException", "UserNotFoundException"],
+    "description": "Metoda zmienia hasło użytkownika o podanym identyfikatorze, weryfikując najpierw poprawność podanego starego hasła za pomocą kodera haseł. Jeśli stare hasło się nie zgadza, rzuca wyjątek AccessDeniedException. W przeciwnym razie haszuje nowe hasło i zapisuje zaktualizowanego użytkownika w bazie danych.",
+    "code_snippet": "public void changePassword(Long userId, ChangePasswordRequestDto request) {\n    var user = findUserById(userId);\n\n    if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {\n        throw new AccessDeniedException(\"Password does not match\");\n    }\n\n    user.setPassword(passwordEncoder.encode(request.getNewPassword()));\n    userRepository.save(user);\n}",
+    "dependencies": ["UserRepository", "PasswordEncoder", "AccessDeniedException"],
+    "tags": ["user", "password", "update", "security"],
+    "source_type": "service"
+  },
+  {
+    "chunk_id": "recipes-manager__UserService__findUserById",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/UserService.java",
+    "package": "pl.sebastianklimas.recipesmenager.users",
+    "class_name": "UserService",
+    "class_type": "service",
+    "class_annotations": ["@AllArgsConstructor", "@Service"],
+    "method_name": "findUserById",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "id", "type": "Long", "annotation": null }
+    ],
+    "return_type": "User",
+    "throws": ["UserNotFoundException"],
+    "description": "Metoda pomocnicza wyszukuje użytkownika w bazie danych na podstawie identyfikatora. Jeśli użytkownik nie zostanie znaleziony, rzuca wyjątek UserNotFoundException z odpowiednim komunikatem zawierającym identyfikator.",
+    "code_snippet": "public User findUserById(Long id) {\n    return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(\"User with id: \" + id + \" not found.\"));\n}",
+    "dependencies": ["UserRepository", "UserNotFoundException"],
+    "tags": ["user", "read", "helper-method"],
+    "source_type": "service"
+  },
+  {
+    "chunk_id": "recipes-manager__UserService__findUserByEmail",
+    "project": "recipes-manager",
+    "source_file": "src/main/java/pl/sebastianklimas/recipesmenager/users/UserService.java",
+    "package": "pl.sebastianklimas.recipesmenager.users",
+    "class_name": "UserService",
+    "class_type": "service",
+    "class_annotations": ["@AllArgsConstructor", "@Service"],
+    "method_name": "findUserByEmail",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "email", "type": "String", "annotation": null }
+    ],
+    "return_type": "User",
+    "throws": ["UserNotFoundException"],
+    "description": "Metoda pomocnicza wyszukuje użytkownika w bazie danych na podstawie adresu email. Jeśli użytkownik nie zostanie znaleziony, rzuca wyjątek UserNotFoundException z odpowiednim komunikatem zawierającym adres email. Wykorzystywana m.in. przez AuthService podczas logowania.",
+    "code_snippet": "public User findUserByEmail(String email) {\n    return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(\"User with email: \" + email + \" not found.\"));\n}",
+    "dependencies": ["UserRepository", "UserNotFoundException"],
+    "tags": ["user", "read", "email", "helper-method"],
+    "source_type": "service"
+  }
+]
