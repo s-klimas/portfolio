@@ -239,7 +239,7 @@
     "code_snippet": "@Test\nvoid shouldLoginAndReturnTokens() {\n    // given\n    var request = new LoginRequestDto(\"test@example.com\", \"password\");\n    var user = new User();\n\n    Claims claimsAccess = Jwts.claims().build();\n    Claims claimsRefresh = Jwts.claims().build();\n    var accessToken = new Jwt(claimsAccess, secretKey);\n    var refreshToken = new Jwt(claimsRefresh, secretKey);\n\n    when(userService.findUserByEmail(\"test@example.com\")).thenReturn(user);\n    when(jwtService.generateAccessToken(user)).thenReturn(accessToken);\n    when(jwtService.generateRefreshToken(user)).thenReturn(refreshToken);\n\n    // when\n    var result = authService.login(request);\n\n    // then\n    verify(authenticationManager).authenticate(any());\n    verify(userService).findUserByEmail(\"test@example.com\");\n\n    assertThat(result.getAccessToken()).isSameAs(accessToken);\n    assertThat(result.getRefreshToken()).isSameAs(refreshToken);\n}",
     "dependencies": ["AuthService", "AuthenticationManager", "JwtService", "UserService", "LoginRequestDto", "Jwt"],
     "tags": ["test", "auth-service", "unit-test", "login", "jwt"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__AuthServiceTest__shouldThrowExceptionWhenRefreshTokenIsNull",
@@ -260,7 +260,7 @@
     "code_snippet": "@Test\nvoid shouldThrowExceptionWhenRefreshTokenIsNull() {\n    // given\n    String refreshToken = \"invalid-token\";\n    when(jwtService.parseToken(refreshToken)).thenReturn(null);\n\n    // when / then\n    assertThatThrownBy(() -> authService.refreshAccessToken(refreshToken))\n            .isInstanceOf(BadCredentialsException.class)\n            .hasMessageContaining(\"Invalid refresh token\");\n}",
     "dependencies": ["AuthService", "JwtService", "BadCredentialsException"],
     "tags": ["test", "auth-service", "unit-test", "refresh-token", "validation"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__AuthServiceTest__shouldThrowExceptionWhenRefreshTokenExpired",
@@ -281,7 +281,7 @@
     "code_snippet": "@Test\nvoid shouldThrowExceptionWhenRefreshTokenExpired() {\n    // given\n    Claims claims = Jwts.claims()\n            .subject(\"123\")\n            .expiration(new Date(System.currentTimeMillis() - 1000)).build();\n\n    Jwt expiredJwt = new Jwt(claims, secretKey);\n    when(jwtService.parseToken(\"expired\")).thenReturn(expiredJwt);\n\n    // when / then\n    assertThatThrownBy(() -> authService.refreshAccessToken(\"expired\"))\n            .isInstanceOf(BadCredentialsException.class)\n            .hasMessageContaining(\"Invalid refresh token\");\n}",
     "dependencies": ["AuthService", "JwtService", "Jwt", "BadCredentialsException"],
     "tags": ["test", "auth-service", "unit-test", "refresh-token", "expiration"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__AuthServiceTest__shouldRefreshAccessTokenSuccessfully",
@@ -302,7 +302,7 @@
     "code_snippet": "@Test\nvoid shouldRefreshAccessTokenSuccessfully() {\n    // given\n    Claims claims = Jwts.claims()\n            .subject(\"42\")\n            .expiration(new Date(System.currentTimeMillis() + 100000))\n            .build();\n\n    Jwt validJwt = new Jwt(claims, secretKey);\n    var user = new User();\n    var newAccessToken = new Jwt(\n            Jwts.claims().subject(\"42\").build(),\n            secretKey\n    );\n\n    when(jwtService.parseToken(\"refresh-token\")).thenReturn(validJwt);\n    when(userService.findUserById(42L)).thenReturn(user);\n    when(jwtService.generateAccessToken(user)).thenReturn(newAccessToken);\n\n    // when\n    var result = authService.refreshAccessToken(\"refresh-token\");\n\n    // then\n    verify(jwtService).parseToken(\"refresh-token\");\n    verify(userService).findUserById(42L);\n    verify(jwtService).generateAccessToken(user);\n\n    assertThat(result).isSameAs(newAccessToken);\n}",
     "dependencies": ["AuthService", "JwtService", "UserService", "Jwt"],
     "tags": ["test", "auth-service", "unit-test", "refresh-token", "success-case"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__AuthServiceTest__shouldGetCurrentUserFromSecurityContext",
@@ -323,7 +323,7 @@
     "code_snippet": "@Test\nvoid shouldGetCurrentUserFromSecurityContext() {\n    // given\n    Authentication auth = mock(Authentication.class);\n    when(auth.getPrincipal()).thenReturn(101L);\n\n    SecurityContext context = mock(SecurityContext.class);\n    when(context.getAuthentication()).thenReturn(auth);\n    SecurityContextHolder.setContext(context);\n\n    var user = new User();\n    when(userService.findUserById(101L)).thenReturn(user);\n\n    // when\n    var result = authService.getCurrentUser();\n\n    // then\n    verify(userService).findUserById(101L);\n    assertThat(result).isSameAs(user);\n}",
     "dependencies": ["AuthService", "UserService", "SecurityContextHolder"],
     "tags": ["test", "auth-service", "unit-test", "current-user", "security-context"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__AuthServiceTest__cleanupSecurityContext",
@@ -344,7 +344,7 @@
     "code_snippet": "@AfterEach\nvoid cleanupSecurityContext() {\n    SecurityContextHolder.clearContext();\n}",
     "dependencies": ["SecurityContextHolder"],
     "tags": ["test", "auth-service", "teardown", "security-context"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__ChangePasswordRequestDto__class",
@@ -735,7 +735,7 @@
     "code_snippet": "@Test\nvoid shouldThrowExceptionWhenImageCannotBeLoaded() {\n    InputStream invalidStream = new ByteArrayInputStream(new byte[0]);\n\n    assertThatThrownBy(() -> imageService.simpleResizeImage(invalidStream, \"image/png\"))\n            .isInstanceOf(IllegalArgumentException.class)\n            .hasMessageContaining(\"Unable to load image from stream\");\n}",
     "dependencies": ["ImageService"],
     "tags": ["test", "image-service", "unit-test", "validation", "exception"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__ImageServiceTest__shouldResizeImageWhenLargerThanMax",
@@ -756,7 +756,7 @@
     "code_snippet": "@Test\nvoid shouldResizeImageWhenLargerThanMax() throws IOException {\n    BufferedImage largeImage = new BufferedImage(4000, 3000, BufferedImage.TYPE_INT_RGB);\n    ByteArrayOutputStream baos = new ByteArrayOutputStream();\n    ImageIO.write(largeImage, \"png\", baos);\n\n    InputStream input = new ByteArrayInputStream(baos.toByteArray());\n\n    InputStream result = imageService.simpleResizeImage(input, \"image/png\");\n\n    BufferedImage resized = ImageIO.read(result);\n    assertThat(resized.getWidth()).isLessThanOrEqualTo(1980);\n    assertThat(resized.getHeight()).isLessThanOrEqualTo(1080);\n}",
     "dependencies": ["ImageService"],
     "tags": ["test", "image-service", "unit-test", "resize"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__ImageServiceTest__shouldReturnSameImageIfWithinMaxSize",
@@ -777,7 +777,7 @@
     "code_snippet": "@Test\nvoid shouldReturnSameImageIfWithinMaxSize() throws IOException {\n    BufferedImage smallImage = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);\n    ByteArrayOutputStream baos = new ByteArrayOutputStream();\n    ImageIO.write(smallImage, \"png\", baos);\n\n    InputStream input = new ByteArrayInputStream(baos.toByteArray());\n    InputStream result = imageService.simpleResizeImage(input, \"image/png\");\n\n    BufferedImage sameImage = ImageIO.read(result);\n    assertThat(sameImage.getWidth()).isEqualTo(800);\n    assertThat(sameImage.getHeight()).isEqualTo(600);\n}",
     "dependencies": ["ImageService"],
     "tags": ["test", "image-service", "unit-test", "no-resize"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__Ingredient__class",
@@ -1966,7 +1966,7 @@
     "code_snippet": "@BeforeEach\nvoid setUp() {\n    currentUser = new User();\n    anotherUser = new User();\n\n    recipeUserPrivate = createRecipe(currentUser, Visibility.PRIVATE);\n    recipeUserPublic = createRecipe(currentUser, Visibility.PUBLIC);\n    recipeOtherPrivate = createRecipe(anotherUser, Visibility.PRIVATE);\n    recipeOtherPublic = createRecipe(anotherUser, Visibility.PUBLIC);\n\n    recipe = createRecipe(currentUser, Visibility.PRIVATE);\n    anotherRecipe = createRecipe(anotherUser, Visibility.PRIVATE);\n\n    recipeEntity = createRecipe(currentUser, Visibility.PRIVATE);\n    recipeEntity.setIngredients(Set.of(new Ingredient(), new Ingredient()));\n\n    recipeRequestDto = new RecipeRequestDto();\n    recipeResponseDto = new RecipeResponseDto();\n}",
     "dependencies": ["User", "Recipe", "Visibility", "Ingredient", "RecipeRequestDto", "RecipeResponseDto"],
     "tags": ["test", "recipe-service", "setup", "fixture"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__createRecipe",
@@ -1990,7 +1990,7 @@
     "code_snippet": "private Recipe createRecipe(User user, Visibility visibility) {\n    Recipe recipe = new Recipe();\n    recipe.setUser(user);\n    recipe.setVisibility(visibility.toString());\n    return recipe;\n}",
     "dependencies": ["Recipe", "User", "Visibility"],
     "tags": ["test", "recipe-service", "helper-method", "fixture"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldCreateRecipe",
@@ -2011,7 +2011,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should create recipe successfully\")\nvoid shouldCreateRecipe() {\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n    when(recipeMapper.toEntity(recipeRequestDto)).thenReturn(recipeEntity);\n    when(recipeMapper.toDto(recipeEntity)).thenReturn(recipeResponseDto);\n    when(recipeRepository.save(any())).thenReturn(recipeEntity);\n\n    RecipeResponseDto result = recipeService.createRecipe(recipeRequestDto);\n\n    assertThat(result).isEqualTo(recipeResponseDto);\n    verify(authService).getCurrentUser();\n    verify(recipeRepository).save(recipeEntity);\n    verify(recipeMapper).toDto(recipeEntity);\n\n    SoftAssertions.assertSoftly(softly -> {\n        softly.assertThat(recipeEntity.getUser()).isEqualTo(currentUser);\n        softly.assertThat(recipeEntity.getVisibility()).isEqualTo(Visibility.PRIVATE.toString());\n        softly.assertThat(recipeEntity.getIngredients())\n                .allMatch(i -> i.getRecipe().equals(recipeEntity));\n    });\n}",
     "dependencies": ["RecipeService", "AuthService", "RecipeMapper", "RecipeRepository"],
     "tags": ["test", "recipe-service", "create", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldPassCorrectRecipeToRepository",
@@ -2032,7 +2032,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should pass correct recipe to repository\")\nvoid shouldPassCorrectRecipeToRepository() {\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n    when(recipeMapper.toEntity(recipeRequestDto)).thenReturn(recipeEntity);\n    when(recipeMapper.toDto(any())).thenReturn(recipeResponseDto);\n\n    recipeService.createRecipe(recipeRequestDto);\n\n    verify(recipeRepository).save(recipeCaptor.capture());\n    Recipe saved = recipeCaptor.getValue();\n\n    assertThat(saved)\n            .extracting(Recipe::getUser, Recipe::getVisibility)\n            .containsExactly(currentUser, Visibility.PRIVATE.toString());\n    assertThat(recipe.getIngredients())\n            .asInstanceOf(InstanceOfAssertFactories.iterable(Ingredient.class))\n            .allSatisfy(ing -> assertThat(ing.getRecipe()).isEqualTo(recipe));\n}",
     "dependencies": ["RecipeService", "AuthService", "RecipeMapper", "RecipeRepository", "ArgumentCaptor"],
     "tags": ["test", "recipe-service", "create", "argument-captor", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldReturnUserAndPublicRecipes",
@@ -2053,7 +2053,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should return user and public recipes\")\nvoid shouldReturnUserAndPublicRecipes() {\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n    when(recipeRepository.findAll()).thenReturn(List.of(\n            recipeUserPrivate, recipeUserPublic, recipeOtherPrivate, recipeOtherPublic));\n    when(recipeMapper.toDto(any())).thenReturn(new RecipeResponseDto());\n\n    List<RecipeResponseDto> result = recipeService.getAllRecipesWithoutPages();\n\n    assertThat(result.size()).isEqualTo(3);\n    verify(recipeMapper, times(3)).toDto(any());\n}",
     "dependencies": ["RecipeService", "AuthService", "RecipeRepository", "RecipeMapper"],
     "tags": ["test", "recipe-service", "read", "visibility", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldNotReturnPrivateRecipesOfOtherUsers",
@@ -2074,7 +2074,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should not return private recipes of other users\")\nvoid shouldNotReturnPrivateRecipesOfOtherUsers() {\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n    when(recipeRepository.findAll()).thenReturn(List.of(recipeOtherPrivate));\n\n    List<RecipeResponseDto> result = recipeService.getAllRecipesWithoutPages();\n\n    assertThat(result.isEmpty()).isTrue();\n    verify(recipeMapper, never()).toDto(any());\n}",
     "dependencies": ["RecipeService", "AuthService", "RecipeRepository", "RecipeMapper"],
     "tags": ["test", "recipe-service", "read", "visibility", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldReturnEmptyListWhenNoRecipes",
@@ -2095,7 +2095,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should return empty list when no recipes\")\nvoid shouldReturnEmptyListWhenNoRecipes() {\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n    when(recipeRepository.findAll()).thenReturn(Collections.emptyList());\n\n    List<RecipeResponseDto> result = recipeService.getAllRecipesWithoutPages();\n\n    assertThat(result.isEmpty()).isTrue();\n    verify(recipeMapper, never()).toDto(any());\n}",
     "dependencies": ["RecipeService", "AuthService", "RecipeRepository", "RecipeMapper"],
     "tags": ["test", "recipe-service", "read", "empty-case", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldCallMapperOnlyForFilteredRecipes",
@@ -2116,7 +2116,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should call mapper only for filtered recipes\")\nvoid shouldCallMapperOnlyForFilteredRecipes() {\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n    when(recipeRepository.findAll()).thenReturn(List.of(\n            recipeUserPrivate, recipeOtherPrivate, recipeOtherPublic));\n    when(recipeMapper.toDto(any())).thenReturn(new RecipeResponseDto());\n\n    recipeService.getAllRecipesWithoutPages();\n\n    verify(recipeMapper, times(2)).toDto(any());\n}",
     "dependencies": ["RecipeService", "AuthService", "RecipeRepository", "RecipeMapper"],
     "tags": ["test", "recipe-service", "read", "filtering", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldReturnPagedUserAndPublicRecipes",
@@ -2137,7 +2137,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should return paged user and public recipes\")\nvoid shouldReturnPagedUserAndPublicRecipes() {\n    int page = 0;\n    int size = 10;\n    String sortBy = \"id\";\n\n    Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));\n\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n    when(recipeRepository.findByUserOrVisibility(\n            currentUser,\n            Visibility.PUBLIC.toString(),\n            pageable\n    )).thenReturn(new PageImpl<>(List.of(\n            recipeUserPrivate,\n            recipeUserPublic,\n            recipeOtherPublic\n    )));\n    when(recipeMapper.toDto(any())).thenReturn(new RecipeResponseDto());\n\n    Page<RecipeResponseDto> result =\n            recipeService.getAllRecipes(page, size, sortBy);\n\n    assertThat(result.getContent().size()).isEqualTo(3);\n    verify(recipeMapper, times(3)).toDto(any());\n}",
     "dependencies": ["RecipeService", "AuthService", "RecipeRepository", "RecipeMapper", "PageRequest", "Sort"],
     "tags": ["test", "recipe-service", "read", "pagination", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldReturnEmptyPageWhenNoRecipesFound",
@@ -2158,7 +2158,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should return empty page when no recipes found\")\nvoid shouldReturnEmptyPageWhenNoRecipesFound() {\n    int page = 0;\n    int size = 10;\n    String sortBy = \"id\";\n\n    Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));\n\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n    when(recipeRepository.findByUserOrVisibility(\n            currentUser,\n            Visibility.PUBLIC.toString(),\n            pageable\n    )).thenReturn(Page.empty());\n\n    Page<RecipeResponseDto> result =\n            recipeService.getAllRecipes(page, size, sortBy);\n\n    assertThat(result.getContent().size()).isEqualTo(0);\n    verify(recipeMapper, never()).toDto(any());\n}",
     "dependencies": ["RecipeService", "AuthService", "RecipeRepository", "RecipeMapper", "PageRequest", "Sort"],
     "tags": ["test", "recipe-service", "read", "pagination", "empty-case", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldCallMapperOnlyForReturnedRecipes",
@@ -2179,7 +2179,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should call mapper only for recipes returned by repository\")\nvoid shouldCallMapperOnlyForReturnedRecipes() {\n    int page = 1;\n    int size = 5;\n    String sortBy = \"name\";\n\n    Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));\n\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n    when(recipeRepository.findByUserOrVisibility(\n            currentUser,\n            Visibility.PUBLIC.toString(),\n            pageable\n    )).thenReturn(new PageImpl<>(List.of(\n            recipeUserPrivate,\n            recipeOtherPublic\n    )));\n    when(recipeMapper.toDto(any())).thenReturn(new RecipeResponseDto());\n\n    recipeService.getAllRecipes(page, size, sortBy);\n\n    verify(recipeMapper, times(2)).toDto(any());\n}",
     "dependencies": ["RecipeService", "AuthService", "RecipeRepository", "RecipeMapper", "PageRequest", "Sort"],
     "tags": ["test", "recipe-service", "read", "pagination", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldThrowExceptionWhenSizeIsGreaterThan100",
@@ -2200,7 +2200,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw exception when size is greater than 100\")\nvoid shouldThrowExceptionWhenSizeIsGreaterThan100() {\n    assertThatThrownBy(() ->\n            recipeService.getAllRecipes(0, 101, \"id\")\n    ).isInstanceOf(IllegalArgumentException.class);\n\n    verify(recipeRepository, never()).findByUserOrVisibility(any(), any(), any());\n}",
     "dependencies": ["RecipeService", "RecipeRepository"],
     "tags": ["test", "recipe-service", "validation", "pagination", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldThrowExceptionWhenPageIsNegative",
@@ -2221,7 +2221,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw exception when page is negative\")\nvoid shouldThrowExceptionWhenPageIsNegative() {\n    assertThatThrownBy(() ->\n            recipeService.getAllRecipes(-1, 10, \"id\")\n    ).isInstanceOf(IllegalArgumentException.class);\n\n    verify(recipeRepository, never()).findByUserOrVisibility(any(), any(), any());\n}",
     "dependencies": ["RecipeService", "RecipeRepository"],
     "tags": ["test", "recipe-service", "validation", "pagination", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldReturnRecipeWhenCurrentUserIsOwner",
@@ -2242,7 +2242,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should return recipe when current user is owner\")\nvoid shouldReturnRecipeWhenCurrentUserIsOwner() {\n    Long id = 10L;\n    when(recipeRepository.findById(id)).thenReturn(Optional.of(recipe));\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n    when(recipeMapper.toDto(recipe)).thenReturn(recipeResponseDto);\n\n    RecipeResponseDto result = recipeService.getRecipeById(id);\n\n    assertThat(result).isEqualTo(recipeResponseDto);\n    verify(recipeRepository).findById(id);\n    verify(recipeMapper).toDto(recipe);\n}",
     "dependencies": ["RecipeService", "RecipeRepository", "AuthService", "RecipeMapper"],
     "tags": ["test", "recipe-service", "read", "authorization", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldReturnRecipeWhenItIsPublicAndUserIsDifferent",
@@ -2263,7 +2263,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should return recipe when it is public and user is different\")\nvoid shouldReturnRecipeWhenItIsPublicAndUserIsDifferent() {\n    Long id = 20L;\n    recipe.setUser(anotherUser);\n    recipe.setVisibility(Visibility.PUBLIC.toString());\n\n    when(recipeRepository.findById(id)).thenReturn(Optional.of(recipe));\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n    when(recipeMapper.toDto(recipe)).thenReturn(recipeResponseDto);\n\n    RecipeResponseDto result = recipeService.getRecipeById(id);\n\n    assertThat(result).isEqualTo(recipeResponseDto);\n    verify(recipeMapper).toDto(recipe);\n}",
     "dependencies": ["RecipeService", "RecipeRepository", "AuthService", "RecipeMapper"],
     "tags": ["test", "recipe-service", "read", "visibility", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldThrowWhenRecipeNotFound",
@@ -2284,7 +2284,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw when recipe not found\")\nvoid shouldThrowWhenRecipeNotFound() {\n    Long id = 99L;\n    when(recipeRepository.findById(id)).thenReturn(Optional.empty());\n\n    assertThatExceptionOfType(RecipeNotFoundException.class)\n            .isThrownBy(() -> recipeService.getRecipeById(id))\n            .withMessage(\"Recipe not found\");\n\n    verify(recipeMapper, never()).toDto(any());\n}",
     "dependencies": ["RecipeService", "RecipeRepository", "RecipeMapper", "RecipeNotFoundException"],
     "tags": ["test", "recipe-service", "read", "not-found", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldThrowWhenRecipeIsPrivateAndUserIsNotOwner",
@@ -2305,7 +2305,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw when recipe is private and user is not owner\")\nvoid shouldThrowWhenRecipeIsPrivateAndUserIsNotOwner() {\n    Long id = 30L;\n    recipe.setUser(anotherUser);\n    recipe.setVisibility(Visibility.PRIVATE.toString());\n\n    when(recipeRepository.findById(id)).thenReturn(Optional.of(recipe));\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n\n    assertThatExceptionOfType(RecipeNotAvailableForCurrentUserException.class)\n            .isThrownBy(() -> recipeService.getRecipeById(id))\n            .withMessage(\"Recipe does not belong to current user and is not public\");\n\n    verify(recipeMapper, never()).toDto(any());\n}",
     "dependencies": ["RecipeService", "RecipeRepository", "AuthService", "RecipeMapper", "RecipeNotAvailableForCurrentUserException"],
     "tags": ["test", "recipe-service", "read", "authorization", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldUpdateRecipeWhenUserIsOwner",
@@ -2326,7 +2326,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should update recipe when user is owner\")\nvoid shouldUpdateRecipeWhenUserIsOwner() {\n    Long id = 1L;\n    when(recipeRepository.findById(id)).thenReturn(Optional.of(recipe));\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n    when(recipeMapper.toDto(recipe)).thenReturn(recipeResponseDto);\n\n    RecipeResponseDto result = recipeService.updateRecipe(id, recipeRequestDto);\n\n    assertThat(result).isEqualTo(recipeResponseDto);\n    verify(recipeMapper).update(recipeRequestDto, recipe);\n    verify(recipeRepository).save(recipe);\n    verify(recipeMapper).toDto(recipe);\n\n    assertThat(recipe.getIngredients())\n            .asInstanceOf(InstanceOfAssertFactories.iterable(Ingredient.class))\n            .allSatisfy(ing -> assertThat(ing.getRecipe()).isEqualTo(recipe));\n}",
     "dependencies": ["RecipeService", "RecipeRepository", "AuthService", "RecipeMapper"],
     "tags": ["test", "recipe-service", "update", "authorization", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldThrowWhenRecipeNotFoundWhileUpdating",
@@ -2347,7 +2347,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw when recipe not found\")\nvoid shouldThrowWhenRecipeNotFoundWhileUpdating() {\n    Long id = 99L;\n    when(recipeRepository.findById(id)).thenReturn(Optional.empty());\n\n    assertThatExceptionOfType(RecipeNotFoundException.class)\n            .isThrownBy(() -> recipeService.updateRecipe(id, recipeRequestDto))\n            .withMessage(\"Recipe not found\");\n\n    verify(recipeRepository).findById(id);\n    verifyNoInteractions(recipeMapper);\n}",
     "dependencies": ["RecipeService", "RecipeRepository", "RecipeMapper", "RecipeNotFoundException"],
     "tags": ["test", "recipe-service", "update", "not-found", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldThrowWhenUserIsNotOwner",
@@ -2368,7 +2368,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw when user is not owner\")\nvoid shouldThrowWhenUserIsNotOwner() {\n    Long id = 5L;\n    when(recipeRepository.findById(id)).thenReturn(Optional.of(anotherRecipe));\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n\n    assertThatExceptionOfType(RecipeNotAvailableForCurrentUserException.class)\n            .isThrownBy(() -> recipeService.updateRecipe(id, recipeRequestDto))\n            .withMessage(\"Recipe does not belong to current user\");\n\n    verify(recipeMapper, never()).update(any(), any());\n    verify(recipeRepository, never()).save(any());\n}",
     "dependencies": ["RecipeService", "RecipeRepository", "AuthService", "RecipeMapper", "RecipeNotAvailableForCurrentUserException"],
     "tags": ["test", "recipe-service", "update", "authorization", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldClearIngredientsBeforeUpdate",
@@ -2389,7 +2389,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should clear ingredients before update\")\nvoid shouldClearIngredientsBeforeUpdate() {\n    Long id = 2L;\n    recipe.setIngredients(new HashSet<>(List.of(new Ingredient(), new Ingredient())));\n\n    when(recipeRepository.findById(id)).thenReturn(Optional.of(recipe));\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n    when(recipeMapper.toDto(recipe)).thenReturn(recipeResponseDto);\n\n    recipeService.updateRecipe(id, recipeRequestDto);\n\n    assertThat(recipe.getIngredients()).isNotNull();\n    verify(recipeMapper).update(recipeRequestDto, recipe);\n}",
     "dependencies": ["RecipeService", "RecipeRepository", "AuthService", "RecipeMapper"],
     "tags": ["test", "recipe-service", "update", "ingredients", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldSaveAndMapAfterSuccessfulUpdate",
@@ -2410,7 +2410,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should save and map after successful update\")\nvoid shouldSaveAndMapAfterSuccessfulUpdate() {\n    Long id = 3L;\n    when(recipeRepository.findById(id)).thenReturn(Optional.of(recipe));\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n    when(recipeMapper.toDto(recipe)).thenReturn(recipeResponseDto);\n\n    RecipeResponseDto result = recipeService.updateRecipe(id, recipeRequestDto);\n\n    assertThat(result).isNotNull();\n    verify(recipeRepository).save(recipe);\n    verify(recipeMapper).toDto(recipe);\n}",
     "dependencies": ["RecipeService", "RecipeRepository", "AuthService", "RecipeMapper"],
     "tags": ["test", "recipe-service", "update", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldDeleteRecipeWhenUserIsOwner",
@@ -2431,7 +2431,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should delete recipe when user is owner\")\nvoid shouldDeleteRecipeWhenUserIsOwner() {\n    Long id = 1L;\n    when(recipeRepository.findById(id)).thenReturn(Optional.of(recipe));\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n\n    recipeService.deleteRecipe(id);\n\n    verify(recipeRepository).delete(recipe);\n}",
     "dependencies": ["RecipeService", "RecipeRepository", "AuthService"],
     "tags": ["test", "recipe-service", "delete", "authorization", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldThrowWhenRecipeNotFoundWhileDeleting",
@@ -2452,7 +2452,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw when recipe not found while deleting\")\nvoid shouldThrowWhenRecipeNotFoundWhileDeleting() {\n    Long id = 42L;\n    when(recipeRepository.findById(id)).thenReturn(Optional.empty());\n\n    assertThatExceptionOfType(RecipeNotFoundException.class)\n            .isThrownBy(() -> recipeService.deleteRecipe(id))\n            .withMessage(\"Recipe not found\");\n\n    verify(recipeRepository, never()).delete(any());\n}",
     "dependencies": ["RecipeService", "RecipeRepository", "RecipeNotFoundException"],
     "tags": ["test", "recipe-service", "delete", "not-found", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeServiceTest__shouldThrowWhenUserIsNotOwnerWhileDeleting",
@@ -2473,7 +2473,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw when user is not owner while deleting\")\nvoid shouldThrowWhenUserIsNotOwnerWhileDeleting() {\n    Long id = 2L;\n    recipe.setUser(anotherUser);\n\n    when(recipeRepository.findById(id)).thenReturn(Optional.of(recipe));\n    when(authService.getCurrentUser()).thenReturn(currentUser);\n\n    assertThatExceptionOfType(RecipeNotAvailableForCurrentUserException.class)\n            .isThrownBy(() -> recipeService.deleteRecipe(id))\n            .withMessage(\"Recipe does not belong to current user\");\n\n    verify(recipeRepository, never()).delete(any());\n}",
     "dependencies": ["RecipeService", "RecipeRepository", "AuthService", "RecipeNotAvailableForCurrentUserException"],
     "tags": ["test", "recipe-service", "delete", "authorization", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__RecipeTools__createRecipe",
@@ -3508,7 +3508,7 @@
     "code_snippet": "@BeforeEach\nvoid setUp() {\n    requestDto = new RegisterUserRequestDto();\n    requestDto.setEmail(TEST_EMAIL);\n    requestDto.setPassword(PASSWORD);\n    user = new User();\n    user.setId(USER_ID);\n    user.setEmail(USER_EMAIL);\n    user.setPassword(PASSWORD);\n    userRole = new UserRole();\n    responseDto = new RegisterUserResponseDto();\n    responseDto.setEmail(TEST_EMAIL);\n    userDto = new UserDto();\n    userDto.setId(USER_ID);\n    userDto.setEmail(USER_EMAIL);\n    passwordRequest = new ChangePasswordRequestDto();\n    passwordRequest.setOldPassword(PASSWORD);\n    passwordRequest.setNewPassword(NEW_PASSWORD);\n}",
     "dependencies": ["RegisterUserRequestDto", "User", "UserRole", "RegisterUserResponseDto", "UserDto", "ChangePasswordRequestDto"],
     "tags": ["test", "user-service", "setup", "fixture"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__UserServiceTest__shouldThrowDuplicateUserException_WhenEmailAlreadyExists",
@@ -3529,7 +3529,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw DuplicateUserException when email already exists\")\nvoid shouldThrowDuplicateUserException_WhenEmailAlreadyExists() {\n    when(userRepository.existsByEmail(TEST_EMAIL)).thenReturn(true);\n\n    assertThatThrownBy(() -> userService.registerUser(requestDto))\n            .isInstanceOf(DuplicateUserException.class)\n            .hasMessage(\"Email is already registered.\");\n\n    verify(userRepository, never()).save(any());\n}",
     "dependencies": ["UserService", "UserRepository", "DuplicateUserException"],
     "tags": ["test", "user-service", "registration", "duplicate", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__UserServiceTest__shouldRegisterUserSuccessfully",
@@ -3550,7 +3550,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should register user successfully\")\nvoid shouldRegisterUserSuccessfully() {\n    when(userRepository.existsByEmail(TEST_EMAIL)).thenReturn(false);\n    when(userMapper.toEntity(requestDto)).thenReturn(user);\n    when(passwordEncoder.encode(PASSWORD)).thenReturn(\"encodedPassword\");\n    when(roleService.getRole(Role.USER.toString())).thenReturn(userRole);\n    when(userMapper.toRegisterUserResponseDto(user)).thenReturn(responseDto);\n\n    RegisterUserResponseDto result = userService.registerUser(requestDto);\n\n    assertThat(result)\n            .isNotNull()\n            .extracting(RegisterUserResponseDto::getEmail)\n            .isEqualTo(TEST_EMAIL);\n\n    verify(userRepository).save(user);\n    verify(passwordEncoder).encode(PASSWORD);\n}",
     "dependencies": ["UserService", "UserRepository", "UserMapper", "PasswordEncoder", "RoleService", "Role"],
     "tags": ["test", "user-service", "registration", "success-case", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__UserServiceTest__shouldReturnUserDto_WhenUserExists",
@@ -3571,7 +3571,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should return UserDto when user exists\")\nvoid shouldReturnUserDto_WhenUserExists() {\n    when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));\n    when(userMapper.toUserDto(user)).thenReturn(userDto);\n\n    UserDto result = userService.getUser(USER_ID);\n\n    assertThat(result)\n            .usingRecursiveComparison()\n            .isEqualTo(userDto);\n}",
     "dependencies": ["UserService", "UserRepository", "UserMapper"],
     "tags": ["test", "user-service", "read", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__UserServiceTest__shouldThrowException_WhenUserNotFound",
@@ -3592,7 +3592,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw UserNotFoundException when user not found\")\nvoid shouldThrowException_WhenUserNotFound() {\n    when(userRepository.findById(999L)).thenReturn(Optional.empty());\n\n    assertThatThrownBy(() -> userService.getUser(999L))\n            .isInstanceOf(UserNotFoundException.class)\n            .hasMessageContaining(\"User with id: 999 not found.\");\n}",
     "dependencies": ["UserService", "UserRepository", "UserNotFoundException"],
     "tags": ["test", "user-service", "read", "not-found", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__UserServiceTest__shouldDeleteUser_WhenUserExists",
@@ -3613,7 +3613,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should delete user when exists\")\nvoid shouldDeleteUser_WhenUserExists() {\n    when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));\n\n    userService.deleteUser(USER_ID);\n\n    verify(userRepository).delete(user);\n}",
     "dependencies": ["UserService", "UserRepository"],
     "tags": ["test", "user-service", "delete", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__UserServiceTest__shouldThrowException_WhenUserDoesNotExist",
@@ -3634,7 +3634,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw when user not found\")\nvoid shouldThrowException_WhenUserDoesNotExist() {\n    when(userRepository.findById(999L)).thenReturn(Optional.empty());\n\n    assertThatThrownBy(() -> userService.deleteUser(999L))\n            .isInstanceOf(UserNotFoundException.class)\n            .hasMessageContaining(\"User with id: 999 not found.\");\n}",
     "dependencies": ["UserService", "UserRepository", "UserNotFoundException"],
     "tags": ["test", "user-service", "delete", "not-found", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__UserServiceTest__shouldPropagateException_WhenRepositoryDeleteFails",
@@ -3655,7 +3655,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should propagate exception when repository delete fails\")\nvoid shouldPropagateException_WhenRepositoryDeleteFails() {\n    when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));\n    doThrow(new RuntimeException(\"DB error\")).when(userRepository).delete(user);\n\n    assertThatThrownBy(() -> userService.deleteUser(USER_ID))\n            .isInstanceOf(RuntimeException.class)\n            .hasMessageContaining(\"DB error\");\n}",
     "dependencies": ["UserService", "UserRepository"],
     "tags": ["test", "user-service", "delete", "error-propagation", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__UserServiceTest__shouldChangePassword_WhenOldPasswordIsCorrect",
@@ -3676,7 +3676,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should change password when old password is correct\")\nvoid shouldChangePassword_WhenOldPasswordIsCorrect() {\n    // given\n    when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));\n    when(passwordEncoder.matches(PASSWORD, \"password123\")).thenReturn(true);\n    when(passwordEncoder.encode(NEW_PASSWORD)).thenReturn(\"encodedNewPassword\");\n\n    // when\n    userService.changePassword(USER_ID, passwordRequest);\n\n    // then\n    verify(passwordEncoder).matches(PASSWORD, \"password123\");\n    verify(passwordEncoder).encode(NEW_PASSWORD);\n    verify(userRepository).save(user);\n    assertThat(user.getPassword()).isEqualTo(\"encodedNewPassword\");\n}",
     "dependencies": ["UserService", "UserRepository", "PasswordEncoder"],
     "tags": ["test", "user-service", "password", "update", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__UserServiceTest__shouldThrowException_WhenOldPasswordIsIncorrect",
@@ -3697,7 +3697,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw when old password is incorrect\")\nvoid shouldThrowException_WhenOldPasswordIsIncorrect() {\n    when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));\n    when(passwordEncoder.matches(PASSWORD, user.getPassword())).thenReturn(false);\n\n    assertThatThrownBy(() -> userService.changePassword(USER_ID, passwordRequest))\n            .isInstanceOf(AccessDeniedException.class)\n            .hasMessage(\"Password does not match\");\n\n    verify(userRepository, never()).save(any());\n}",
     "dependencies": ["UserService", "UserRepository", "PasswordEncoder", "AccessDeniedException"],
     "tags": ["test", "user-service", "password", "validation", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__UserServiceTest__shouldThrowException_WhenUserNotFound_whileChangingPassword",
@@ -3718,7 +3718,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw when user not found during password change\")\nvoid shouldThrowException_WhenUserNotFound_whileChangingPassword() {\n    when(userRepository.findById(99L)).thenReturn(Optional.empty());\n\n    assertThatThrownBy(() -> userService.changePassword(99L, passwordRequest))\n            .isInstanceOf(UserNotFoundException.class)\n            .hasMessageContaining(\"User with id: 99 not found.\");\n\n    verify(passwordEncoder, never()).matches(anyString(), anyString());\n}",
     "dependencies": ["UserService", "UserRepository", "PasswordEncoder", "UserNotFoundException"],
     "tags": ["test", "user-service", "password", "not-found", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__UserServiceTest__shouldReturnUser_WhenUserExistsById",
@@ -3739,7 +3739,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should return user when exists by id\")\nvoid shouldReturnUser_WhenUserExistsById() {\n    when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));\n\n    User result = userService.findUserById(USER_ID);\n\n    assertThat(result)\n            .usingRecursiveComparison()\n            .isEqualTo(user);\n}",
     "dependencies": ["UserService", "UserRepository"],
     "tags": ["test", "user-service", "read", "helper-method", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__UserServiceTest__shouldThrowException_WhenUserDoesNotExistById",
@@ -3760,7 +3760,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw when user does not exist by id\")\nvoid shouldThrowException_WhenUserDoesNotExistById() {\n    when(userRepository.findById(99L)).thenReturn(Optional.empty());\n\n    assertThatThrownBy(() -> userService.findUserById(99L))\n            .isInstanceOf(UserNotFoundException.class)\n            .hasMessage(\"User with id: 99 not found.\");\n}",
     "dependencies": ["UserService", "UserRepository", "UserNotFoundException"],
     "tags": ["test", "user-service", "read", "not-found", "helper-method", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__UserServiceTest__shouldReturnUser_WhenUserExistsByEmail",
@@ -3781,7 +3781,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should return user when exists by email\")\nvoid shouldReturnUser_WhenUserExistsByEmail() {\n    when(userRepository.findByEmail(USER_EMAIL)).thenReturn(Optional.of(user));\n\n    User result = userService.findUserByEmail(USER_EMAIL);\n\n    assertThat(result)\n            .usingRecursiveComparison()\n            .isEqualTo(user);\n}",
     "dependencies": ["UserService", "UserRepository"],
     "tags": ["test", "user-service", "read", "email", "helper-method", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__UserServiceTest__shouldThrowException_WhenUserDoesNotExistByEmail",
@@ -3802,7 +3802,7 @@
     "code_snippet": "@Test\n@DisplayName(\"Should throw when user does not exist by email\")\nvoid shouldThrowException_WhenUserDoesNotExistByEmail() {\n    when(userRepository.findByEmail(\"notfound@example.com\")).thenReturn(Optional.empty());\n\n    assertThatThrownBy(() -> userService.findUserByEmail(\"notfound@example.com\"))\n            .isInstanceOf(UserNotFoundException.class)\n            .hasMessage(\"User with email: notfound@example.com not found.\");\n}",
     "dependencies": ["UserService", "UserRepository", "UserNotFoundException"],
     "tags": ["test", "user-service", "read", "email", "not-found", "helper-method", "unit-test"],
-    "source_type": "service"
+    "source_type": "test"
   },
   {
     "chunk_id": "recipes-manager__Visibility__enum",
@@ -3824,27 +3824,6 @@
     "dependencies": [],
     "tags": ["enum", "recipe", "visibility", "access-control"],
     "source_type": "entity"
-  },
-  {
-    "chunk_id": "recipes-manager__pom_xml__project_config",
-    "project": "recipes-manager",
-    "source_file": "pom.xml",
-    "package": null,
-    "class_name": "pom.xml",
-    "class_type": "config",
-    "class_annotations": [],
-    "method_name": null,
-    "http_method": null,
-    "http_path": null,
-    "method_annotations": [],
-    "parameters": [],
-    "return_type": null,
-    "throws": [],
-    "description": "Plik konfiguracyjny Maven definiujący projekt 'recipe-manager' oparty na Spring Boot 3.5.4 z Javą 24, wykorzystujący Spring AI 1.0.1 (BOM). Deklaruje kluczowe zależności: Spring Web, Spring Data JPA, Spring AI OpenAI starter, Spring Security, walidację, PostgreSQL, Liquibase, MapStruct, Lombok, bibliotekę JWT (jjwt), bibliotekę do przetwarzania obrazów (imgscalr), springdoc-openapi/swagger do dokumentacji API oraz zależności testowe (JUnit przez spring-boot-starter-test, Mockito, AssertJ). Konfiguruje również wtyczkę Maven do budowania aplikacji Spring Boot.",
-    "code_snippet": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n    <modelVersion>4.0.0</modelVersion>\n    <parent>\n        <groupId>org.springframework.boot</groupId>\n        <artifactId>spring-boot-starter-parent</artifactId>\n        <version>3.5.4</version>\n        <relativePath/> <!-- lookup parent from repository -->\n    </parent>\n    <groupId>pl.sebastianklimas</groupId>\n    <artifactId>recipe-manager</artifactId>\n    <version>0.0.1-SNAPSHOT</version>\n    <name>RecipesMenager</name>\n    <description>RecipesMenager</description>\n    <properties>\n        <java.version>24</java.version>\n        <spring-ai.version>1.0.1</spring-ai.version>\n    </properties>\n    <dependencyManagement>\n        <dependencies>\n            <dependency>\n                <groupId>org.springframework.ai</groupId>\n                <artifactId>spring-ai-bom</artifactId>\n                <version>${spring-ai.version}</version>\n                <type>pom</type>\n                <scope>import</scope>\n            </dependency>\n        </dependencies>\n    </dependencyManagement>\n    <dependencies>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-web</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-data-jpa</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.ai</groupId>\n            <artifactId>spring-ai-starter-model-openai</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-devtools</artifactId>\n            <scope>runtime</scope>\n            <optional>true</optional>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-test</artifactId>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.projectlombok</groupId>\n            <artifactId>lombok</artifactId>\n            <scope>provided</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.mapstruct</groupId>\n            <artifactId>mapstruct-processor</artifactId>\n            <version>1.6.3</version>\n        </dependency>\n        <dependency>\n            <groupId>org.mapstruct</groupId>\n            <artifactId>mapstruct</artifactId>\n            <version>1.6.3</version>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-validation</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.postgresql</groupId>\n            <artifactId>postgresql</artifactId>\n            <scope>runtime</scope>\n        </dependency>\n        <dependency>\n            <groupId>me.paulschwarz</groupId>\n            <artifactId>spring-dotenv</artifactId>\n            <version>4.0.0</version>\n        </dependency>\n        <dependency>\n            <groupId>io.jsonwebtoken</groupId>\n            <artifactId>jjwt-impl</artifactId>\n            <version>0.13.0</version>\n        </dependency>\n        <dependency>\n            <groupId>io.jsonwebtoken</groupId>\n            <artifactId>jjwt-jackson</artifactId>\n            <version>0.13.0</version>\n        </dependency>\n        <dependency>\n            <groupId>io.jsonwebtoken</groupId>\n            <artifactId>jjwt-api</artifactId>\n            <version>0.13.0</version>\n        </dependency>\n        <dependency>\n            <groupId>org.liquibase</groupId>\n            <artifactId>liquibase-core</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-security</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.imgscalr</groupId>\n            <artifactId>imgscalr-lib</artifactId>\n            <version>4.2</version>\n        </dependency>\n        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->\n        <dependency>\n            <groupId>org.mockito</groupId>\n            <artifactId>mockito-core</artifactId>\n            <version>5.7.0</version>\n            <scope>test</scope>\n        </dependency>\n        <!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->\n        <dependency>\n            <groupId>org.assertj</groupId>\n            <artifactId>assertj-core</artifactId>\n            <version>3.27.7</version>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.springdoc</groupId>\n            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>\n            <version>2.8.13</version>\n        </dependency>\n        <dependency>\n            <groupId>io.swagger.core.v3</groupId>\n            <artifactId>swagger-core-jakarta</artifactId>\n            <version>2.2.25</version>\n        </dependency>\n    </dependencies>\n\n    <build>\n        <plugins>\n            <plugin>\n                <groupId>org.springframework.boot</groupId>\n                <artifactId>spring-boot-maven-plugin</artifactId>\n            </plugin>\n        </plugins>\n    </build>\n\n</project>",
-    "dependencies": ["spring-boot-starter-web", "spring-boot-starter-data-jpa", "spring-ai-starter-model-openai", "spring-boot-starter-security", "spring-boot-starter-validation", "postgresql", "liquibase-core", "mapstruct", "lombok", "jjwt", "imgscalr-lib", "mockito-core", "assertj-core", "springdoc-openapi-starter-webmvc-ui", "swagger-core-jakarta"],
-    "tags": ["maven", "pom", "build-configuration", "dependencies", "spring-boot"],
-    "source_type": "config"
   },
   {
     "chunk_id": "recipes-manager__README__tech_stack",
