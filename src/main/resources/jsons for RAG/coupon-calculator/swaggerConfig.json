@@ -1,0 +1,23 @@
+[
+  {
+    "chunk_id": "coupon-calculator__SwaggerConfig__openAPI",
+    "project": "coupon-calculator",
+    "source_file": "src/main/java/pl/sebastianklimas/couponcalculator/config/SwaggerConfig.java",
+    "package": "pl.sebastianklimas.couponcalculator.config",
+    "class_name": "SwaggerConfig",
+    "class_type": "config",
+    "class_annotations": ["@Configuration"],
+    "method_name": "openAPI",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": ["@Bean"],
+    "parameters": [],
+    "return_type": "OpenAPI",
+    "throws": [],
+    "description": "Tworzy i konfiguruje bean OpenAPI dla dokumentacji Swagger, ustawiając tytuł, opis, wersję oraz dane kontaktowe API.",
+    "code_snippet": "@Bean\npublic OpenAPI openAPI() {\n    return new OpenAPI()\n            .info(\n                    new Info().title(\"Coupon calculator REST API\")\n                            .description(\"Here you can try out and better prepare to integrate with frontend.\")\n                            .version(\"1.0\").contact(\n                                    new Contact()\n                                            .name(\"Sebastian Klimas\")\n                                            .email(\"sebastianklimas@op.pl\")\n                                            .url(\"https://sebastianklimas.pl\")));\n}",
+    "dependencies": ["OpenAPI", "Info", "Contact"],
+    "tags": ["swagger", "openapi", "configuration", "documentation"],
+    "source_type": "config"
+  }
+]
