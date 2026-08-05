@@ -1,0 +1,77 @@
+[
+  {
+    "chunk_id": "coupon-calculator__CouponOptimizer__generateAllPotentialOrders",
+    "project": "coupon-calculator",
+    "source_file": "src/main/java/pl/sebastianklimas/couponcalculator/services/CouponOptimizer.java",
+    "package": "pl.sebastianklimas.couponcalculator.services",
+    "class_name": "CouponOptimizer",
+    "class_type": "service",
+    "class_annotations": ["@Service"],
+    "method_name": "generateAllPotentialOrders",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "coupons", "type": "List<Coupon>", "annotation": null },
+      { "name": "combinations", "type": "List<Combination>", "annotation": null }
+    ],
+    "return_type": "List<PotentialOrder>",
+    "throws": ["IllegalArgumentException"],
+    "description": "Publiczna metoda generująca wszystkie możliwe zamówienia (PotentialOrder) poprzez równoległe przetworzenie każdej kombinacji podzbiorów i wygenerowanie wszystkich wariantów przypisania kuponów. Rzuca wyjątek, jeśli kupony lub kombinacje są nullem.",
+    "code_snippet": "public List<PotentialOrder> generateAllPotentialOrders(List<Coupon> coupons,\n                                                       List<Combination> combinations) {\n    if (coupons == null || combinations == null) {\n        throw new IllegalArgumentException(\"Coupons and combinations must not be null\");\n    }\n\n    return combinations\n            .parallelStream()\n            .flatMap(combination ->\n                    generateCombinations(combination.getSubsets(), coupons).stream())\n            .map(PotentialOrder::new)\n            .toList();\n}",
+    "dependencies": ["Coupon", "Combination", "PotentialOrder", "Subset", "PotentialCart"],
+    "tags": ["optimization", "coupons", "public-method", "parallel-stream"],
+    "source_type": "service"
+  },
+  {
+    "chunk_id": "coupon-calculator__CouponOptimizer__generateCombinations",
+    "project": "coupon-calculator",
+    "source_file": "src/main/java/pl/sebastianklimas/couponcalculator/services/CouponOptimizer.java",
+    "package": "pl.sebastianklimas.couponcalculator.services",
+    "class_name": "CouponOptimizer",
+    "class_type": "service",
+    "class_annotations": ["@Service"],
+    "method_name": "generateCombinations",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "subsets", "type": "List<Subset>", "annotation": null },
+      { "name": "coupons", "type": "List<Coupon>", "annotation": null }
+    ],
+    "return_type": "List<List<PotentialCart>>",
+    "throws": [],
+    "description": "Prywatna metoda inicjująca proces przeszukiwania (backtracking) w celu wygenerowania wszystkich możliwych kombinacji koszyków (PotentialCart) z lub bez przypisanych kuponów dla danej listy podzbiorów.",
+    "code_snippet": "private List<List<PotentialCart>> generateCombinations(List<Subset> subsets,\n                                                       List<Coupon> coupons) {\n    return backtrack(subsets, coupons, 0, new ArrayList<>(), new HashSet<>());\n}",
+    "dependencies": ["Subset", "Coupon", "PotentialCart"],
+    "tags": ["combinatorics", "private-method", "backtracking"],
+    "source_type": "service"
+  },
+  {
+    "chunk_id": "coupon-calculator__CouponOptimizer__backtrack",
+    "project": "coupon-calculator",
+    "source_file": "src/main/java/pl/sebastianklimas/couponcalculator/services/CouponOptimizer.java",
+    "package": "pl.sebastianklimas.couponcalculator.services",
+    "class_name": "CouponOptimizer",
+    "class_type": "service",
+    "class_annotations": ["@Service"],
+    "method_name": "backtrack",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "subsets", "type": "List<Subset>", "annotation": null },
+      { "name": "coupons", "type": "List<Coupon>", "annotation": null },
+      { "name": "subsetIndex", "type": "int", "annotation": null },
+      { "name": "currentCombination", "type": "List<PotentialCart>", "annotation": null },
+      { "name": "usedCoupons", "type": "Set<Integer>", "annotation": null }
+    ],
+    "return_type": "List<List<PotentialCart>>",
+    "throws": [],
+    "description": "Prywatna metoda rekurencyjna generująca wszystkie warianty przypisań kuponów do podzbiorów: dla każdego podzbioru rozgałęzia się na wariant bez kuponu oraz warianty z każdym nieużytym jeszcze kuponem, łącząc wyniki obu strumieni.",
+    "code_snippet": "private List<List<PotentialCart>> backtrack(List<Subset> subsets,\n                                            List<Coupon> coupons,\n                                            int subsetIndex,\n                                            List<PotentialCart> currentCombination,\n                                            Set<Integer> usedCoupons) {\n    if (subsetIndex == subsets.size()) {\n        return List.of(new ArrayList<>(currentCombination));\n    }\n\n    Subset currentSubset = subsets.get(subsetIndex);\n\n    Stream<List<PotentialCart>> withoutCouponStream = Stream.of(currentSubset)\n            .map(b -> {\n                List<PotentialCart> newCombination = new ArrayList<>(currentCombination);\n                newCombination.add(new PotentialCart(b));\n                return backtrack(subsets, coupons, subsetIndex + 1, newCombination, new HashSet<>(usedCoupons));\n            })\n            .flatMap(List::stream);\n\n    Stream<List<PotentialCart>> withCouponStream =\n            IntStream.range(0, coupons.size())\n                    .filter(i -> !usedCoupons.contains(i))\n                    .mapToObj(i -> {\n                        List<PotentialCart> newCombination = new ArrayList<>(currentCombination);\n                        newCombination.add(new PotentialCart(currentSubset, coupons.get(i)));\n                        Set<Integer> newUsed = new HashSet<>(usedCoupons);\n                        newUsed.add(i);\n                        return backtrack(subsets, coupons, subsetIndex + 1, newCombination, newUsed);\n                    })\n                    .flatMap(List::stream);\n\n    return Stream.concat(withoutCouponStream, withCouponStream).toList();\n}",
+    "dependencies": ["Subset", "Coupon", "PotentialCart"],
+    "tags": ["combinatorics", "backtracking", "recursion", "private-method", "coupon-assignment"],
+    "source_type": "service"
+  }
+]
