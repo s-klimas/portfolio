@@ -1,0 +1,69 @@
+[
+  {
+    "chunk_id": "coupon-calculator__Combination__constructor",
+    "project": "coupon-calculator",
+    "source_file": "src/main/java/pl/sebastianklimas/couponcalculator/models/Combination.java",
+    "package": "pl.sebastianklimas.couponcalculator.models",
+    "class_name": "Combination",
+    "class_type": "model",
+    "class_annotations": [],
+    "method_name": "Combination",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "subsets", "type": "List<Subset>", "annotation": null }
+    ],
+    "return_type": null,
+    "throws": [],
+    "description": "Konstruktor klasy Combination inicjalizujący obiekt listą podzbiorów (Subset) reprezentujących możliwe kombinacje produktów.",
+    "code_snippet": "public Combination(List<Subset> subsets) {\n    this.subsets = subsets;\n}",
+    "dependencies": ["Subset"],
+    "tags": ["constructor", "combination", "model"],
+    "source_type": "entity"
+  },
+  {
+    "chunk_id": "coupon-calculator__Combination__getSubsets",
+    "project": "coupon-calculator",
+    "source_file": "src/main/java/pl/sebastianklimas/couponcalculator/models/Combination.java",
+    "package": "pl.sebastianklimas.couponcalculator.models",
+    "class_name": "Combination",
+    "class_type": "model",
+    "class_annotations": [],
+    "method_name": "getSubsets",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [],
+    "return_type": "List<Subset>",
+    "throws": [],
+    "description": "Getter zwracający listę podzbiorów (Subset) przechowywanych w obiekcie Combination.",
+    "code_snippet": "public List<Subset> getSubsets() {\n    return subsets;\n}",
+    "dependencies": ["Subset"],
+    "tags": ["getter", "combination", "model"],
+    "source_type": "entity"
+  },
+  {
+    "chunk_id": "coupon-calculator__Combination__setSubsets",
+    "project": "coupon-calculator",
+    "source_file": "src/main/java/pl/sebastianklimas/couponcalculator/models/Combination.java",
+    "package": "pl.sebastianklimas.couponcalculator.models",
+    "class_name": "Combination",
+    "class_type": "model",
+    "class_annotations": [],
+    "method_name": "setSubsets",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "subsets", "type": "List<Subset>", "annotation": null }
+    ],
+    "return_type": "void",
+    "throws": [],
+    "description": "Setter ustawiający nową listę podzbiorów (Subset) w obiekcie Combination.",
+    "code_snippet": "public void setSubsets(List<Subset> subsets) {\n    this.subsets = subsets;\n}",
+    "dependencies": ["Subset"],
+    "tags": ["setter", "combination", "model"],
+    "source_type": "entity"
+  }
+]
