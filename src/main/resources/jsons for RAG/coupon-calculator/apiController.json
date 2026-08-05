@@ -1,0 +1,29 @@
+[
+  {
+    "chunk_id": "coupon-calculator__APIController__getListOfProductsAndCoupons",
+    "project": "coupon-calculator",
+    "source_file": "src/main/java/pl/sebastianklimas/couponcalculator/controllers/APIController.java",
+    "package": "pl.sebastianklimas.couponcalculator.controllers",
+    "class_name": "APIController",
+    "class_type": "controller",
+    "class_annotations": ["@AllArgsConstructor", "@RestController", "@Tag(name = \"Calculate shopping list\")"],
+    "method_name": "getListOfProductsAndCoupons",
+    "http_method": "POST",
+    "http_path": "/calculate-shopping-list",
+    "method_annotations": [
+      "@CrossOrigin(origins = \"*\")",
+      "@PostMapping(\"/calculate-shopping-list\")",
+      "@Operation(summary = \"Calculates which products to buy using which coupon.\")"
+    ],
+    "parameters": [
+      { "name": "inputLists", "type": "ApiRequest", "annotation": "@RequestBody" }
+    ],
+    "return_type": "ResponseEntity<List<PotentialOrder>>",
+    "throws": [],
+    "description": "Endpoint HTTP POST przyjmujący listę produktów i kuponów, który deleguje logikę wyznaczania możliwych zestawów zakupowych do APIService i zwraca listę potencjalnych zamówień w odpowiedzi HTTP 200.",
+    "code_snippet": "@CrossOrigin(origins = \"*\")\n@PostMapping(\"/calculate-shopping-list\")\n@Operation(summary = \"Calculates which products to buy using which coupon.\")\npublic ResponseEntity<List<PotentialOrder>> getListOfProductsAndCoupons(\n        @RequestBody ApiRequest inputLists\n) {\n    return ResponseEntity.ok(apiService.splitLists(inputLists.getProducts(), inputLists.getCoupons()));\n}",
+    "dependencies": ["APIService", "ApiRequest", "PotentialOrder"],
+    "tags": ["endpoint", "shopping-list", "coupon", "rest-controller"],
+    "source_type": "endpoint"
+  }
+]
