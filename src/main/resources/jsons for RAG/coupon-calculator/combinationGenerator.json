@@ -1,0 +1,79 @@
+[
+  {
+    "chunk_id": "coupon-calculator__CombinationGenerator__generateListOfAllSubsets",
+    "project": "coupon-calculator",
+    "source_file": "src/main/java/pl/sebastianklimas/couponcalculator/services/CombinationGenerator.java",
+    "package": "pl.sebastianklimas.couponcalculator.services",
+    "class_name": "CombinationGenerator",
+    "class_type": "service",
+    "class_annotations": ["@Service"],
+    "method_name": "generateListOfAllSubsets",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "products", "type": "List<Product>", "annotation": null }
+    ],
+    "return_type": "List<Subset>",
+    "throws": [],
+    "description": "Publiczna metoda generująca wszystkie możliwe niepuste podzbiory (Subset) z podanej listy produktów przy użyciu maskowania bitowego (2^n kombinacji), z pominięciem zbioru pustego.",
+    "code_snippet": "public List<Subset> generateListOfAllSubsets(List<Product> products) {\n    List<Subset> allCombinations = new ArrayList<>();\n    int totalSubsets = 1 << products.size(); // 2^n\n    for (int i = 0; i < totalSubsets; i++) {\n        Set<Product> productSet = new HashSet<>();\n        for (int j = 0; j < products.size(); j++) {\n            if ((i & (1 << j)) != 0) {\n                productSet.add(products.get(j));\n            }\n        }\n        if (!productSet.isEmpty()) {\n            allCombinations.add(new Subset(productSet));\n        }\n    }\n    return allCombinations;\n}",
+    "dependencies": ["Product", "Subset"],
+    "tags": ["combinatorics", "subsets", "public-method", "bitmasking"],
+    "source_type": "service"
+  },
+  {
+    "chunk_id": "coupon-calculator__CombinationGenerator__findAllCombinations",
+    "project": "coupon-calculator",
+    "source_file": "src/main/java/pl/sebastianklimas/couponcalculator/services/CombinationGenerator.java",
+    "package": "pl.sebastianklimas.couponcalculator.services",
+    "class_name": "CombinationGenerator",
+    "class_type": "service",
+    "class_annotations": ["@Service"],
+    "method_name": "findAllCombinations",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "fullList", "type": "Set<Product>", "annotation": null },
+      { "name": "allSubsetsList", "type": "List<Subset>", "annotation": null },
+      { "name": "maxSubsets", "type": "int", "annotation": null }
+    ],
+    "return_type": "List<Combination>",
+    "throws": [],
+    "description": "Publiczna metoda wyznaczająca wszystkie możliwe kombinacje podzbiorów (Combination), które łącznie pokrywają pełną listę produktów, wykorzystując rekurencyjną metodę pomocniczą generateAllCombinations.",
+    "code_snippet": "public List<Combination> findAllCombinations(Set<Product> fullList,\n                                             List<Subset> allSubsetsList,\n                                             int maxSubsets) {\n    List<Combination> results = new ArrayList<>();\n    generateAllCombinations(allSubsetsList, fullList, maxSubsets, new ArrayList<>(), 0, new HashSet<>(), results);\n    return results;\n}",
+    "dependencies": ["Product", "Subset", "Combination"],
+    "tags": ["combinatorics", "combinations", "public-method"],
+    "source_type": "service"
+  },
+  {
+    "chunk_id": "coupon-calculator__CombinationGenerator__generateAllCombinations",
+    "project": "coupon-calculator",
+    "source_file": "src/main/java/pl/sebastianklimas/couponcalculator/services/CombinationGenerator.java",
+    "package": "pl.sebastianklimas.couponcalculator.services",
+    "class_name": "CombinationGenerator",
+    "class_type": "service",
+    "class_annotations": ["@Service"],
+    "method_name": "generateAllCombinations",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [
+      { "name": "subsets", "type": "List<Subset>", "annotation": null },
+      { "name": "fullSet", "type": "Set<Product>", "annotation": null },
+      { "name": "maxSubsets", "type": "int", "annotation": null },
+      { "name": "currentCombination", "type": "List<Subset>", "annotation": null },
+      { "name": "startIndex", "type": "int", "annotation": null },
+      { "name": "usedElements", "type": "Set<Product>", "annotation": null },
+      { "name": "results", "type": "List<Combination>", "annotation": null }
+    ],
+    "return_type": "void",
+    "throws": [],
+    "description": "Prywatna metoda rekurencyjna typu backtracking, która buduje kombinacje podzbiorów pokrywające pełny zbiór produktów bez powtórzeń elementów, respektując maksymalną liczbę podzbiorów (maxSubsets), i zapisuje znalezione kombinacje do listy wyników.",
+    "code_snippet": "private void generateAllCombinations(\n        List<Subset> subsets,\n        Set<Product> fullSet,\n        int maxSubsets,\n        List<Subset> currentCombination,\n        int startIndex,\n        Set<Product> usedElements,\n        List<Combination> results) {\n    if (currentCombination.size() > maxSubsets) return;\n    if (usedElements.equals(fullSet)) {\n        results.add(new Combination(new ArrayList<>(currentCombination)));\n        return;\n    }\n\n    for (int i = startIndex; i < subsets.size(); i++) {\n        Subset subset = subsets.get(i);\n\n        if (subset.getProducts().stream().anyMatch(usedElements::contains)) {\n            continue;\n        }\n\n        currentCombination.add(subset);\n        usedElements.addAll(subset.getProducts());\n\n        generateAllCombinations(subsets, fullSet, maxSubsets, currentCombination, i + 1, usedElements, results);\n\n        currentCombination.remove(currentCombination.size() - 1);\n        subset.getProducts().forEach(usedElements::remove);\n    }\n}",
+    "dependencies": ["Product", "Subset", "Combination"],
+    "tags": ["combinatorics", "backtracking", "recursion", "private-method"],
+    "source_type": "service"
+  }
+]
