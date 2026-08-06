@@ -1,0 +1,46 @@
+[
+  {
+    "chunk_id": "portfolio__CVController__previewPdf",
+    "project": "portfolio",
+    "source_file": "src/main/java/pl/sebastianklimas/portfolio/web/CVController.java",
+    "package": "pl.sebastianklimas.portfolio.web",
+    "class_name": "CVController",
+    "class_type": "controller",
+    "class_annotations": ["@Controller"],
+    "method_name": "previewPdf",
+    "http_method": "GET",
+    "http_path": "/cv",
+    "method_annotations": ["@GetMapping(\"/cv\")"],
+    "parameters": [],
+    "return_type": "ResponseEntity<Resource>",
+    "throws": [],
+    "description": "Endpoint zwracający plik PDF z CV (załadowany z zasobów classpath) do podglądu w przeglądarce, ustawiając nagłówek Content-Disposition na 'inline' oraz typ zawartości application/pdf.",
+    "code_snippet": "@GetMapping(\"/cv\")\npublic ResponseEntity<Resource> previewPdf() {\n    Resource resource = new ClassPathResource(\"files/CVKlimasSebastian.pdf\");\n\n    return ResponseEntity.ok()\n            .contentType(MediaType.APPLICATION_PDF)\n            .header(\n                    HttpHeaders.CONTENT_DISPOSITION,\n                    \"inline; filename=\\\"\" + resource.getFilename() + \"\\\"\"\n            )\n            .body(resource);\n}",
+    "dependencies": ["ClassPathResource", "Resource"],
+    "tags": ["cv", "pdf", "download", "resource", "file-serving"],
+    "source_type": "endpoint"
+  },
+  {
+    "chunk_id": "portfolio__CVController__handleIOException",
+    "project": "portfolio",
+    "source_file": "src/main/java/pl/sebastianklimas/portfolio/web/CVController.java",
+    "package": "pl.sebastianklimas.portfolio.web",
+    "class_name": "CVController",
+    "class_type": "controller",
+    "class_annotations": ["@Controller"],
+    "method_name": "handleIOException",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": ["@ExceptionHandler(IOException.class)"],
+    "parameters": [
+      { "name": "ex", "type": "IOException", "annotation": "null" }
+    ],
+    "return_type": "String",
+    "throws": [],
+    "description": "Globalny handler wyjątków dla IOException zgłaszanych w kontrolerze, zwracający nazwę widoku strony błędu 404 ('error/404').",
+    "code_snippet": "@ExceptionHandler(IOException.class)\npublic String handleIOException(IOException ex) {\n    return \"error/404\";\n}",
+    "dependencies": [],
+    "tags": ["exception-handling", "error-page", "io-exception", "404"],
+    "source_type": "endpoint"
+  }
+]
