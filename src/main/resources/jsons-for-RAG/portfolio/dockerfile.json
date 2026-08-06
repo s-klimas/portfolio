@@ -1,0 +1,23 @@
+[
+  {
+    "chunk_id": "portfolio__Dockerfile__build-config",
+    "project": "portfolio",
+    "source_file": "Dockerfile",
+    "package": null,
+    "class_name": null,
+    "class_type": "config",
+    "class_annotations": [],
+    "method_name": "docker-image-build",
+    "http_method": null,
+    "http_path": null,
+    "method_annotations": [],
+    "parameters": [],
+    "return_type": null,
+    "throws": [],
+    "description": "Wieloetapowy Dockerfile budujący aplikację: pierwszy etap (MAVEN_BUILD) pobiera zależności i pakuje projekt Mavenem na bazie obrazu maven:3.8.7-openjdk-18-slim, drugi etap kopiuje wynikowy plik JAR do lekkiego obrazu openjdk:21-slim-bookworm, wystawia port 8080 i uruchamia aplikację poleceniem 'java -jar /app.jar'.",
+    "code_snippet": "FROM maven:3.8.7-openjdk-18-slim  AS MAVEN_BUILD\nCOPY ./pom.xml ./pom.xml\nRUN mvn dependency:go-offline -B\nCOPY ./src ./src\nRUN mvn package\n\nFROM openjdk:21-slim-bookworm\nEXPOSE 8080\nCOPY --from=MAVEN_BUILD /target/Portfolio-*.jar /app.jar\nENTRYPOINT [\"java\",\"-jar\",\"/app.jar\"]",
+    "dependencies": ["maven:3.8.7-openjdk-18-slim", "openjdk:21-slim-bookworm"],
+    "tags": ["docker", "dockerfile", "multi-stage-build", "maven", "deployment"],
+    "source_type": "config"
+  }
+]
