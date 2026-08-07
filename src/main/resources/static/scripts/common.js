@@ -167,15 +167,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const API_URL = '/streamedChat'; // ewentualnie '/chat' jeśli wolisz wersję niestreamowaną
 
-    function appendMessage(text, cssClass) {
+    function appendMessage(text, cssClass, asHtml = false) {
         const p = document.createElement('p');
         p.classList.add(cssClass);
         const a = document.createElement('a');
-        a.textContent = text;
+        if (asHtml) {
+            a.innerHTML = DOMPurify.sanitize(marked.parse(text));
+        } else {
+            a.textContent = text;
+        }
         p.appendChild(a);
         messagesContainer.appendChild(p);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        return a; // zwracamy referencję do <a>, żeby móc ją aktualizować (streaming)
+        return a;
     }
 
     function setInputLocked(locked) {
@@ -212,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!response.body) {
                 const text = await response.text();
-                aiMessageEl.textContent = text;
+                aiMessageEl.innerHTML = DOMPurify.sanitize(marked.parse(text));
             } else {
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder('utf-8');
@@ -228,6 +232,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     aiMessageEl.textContent = fullText;
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
                 }
+
+                aiMessageEl.innerHTML = DOMPurify.sanitize(marked.parse(fullText));
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
         } catch (error) {
             console.error('Błąd podczas komunikacji z serwerem:', error);

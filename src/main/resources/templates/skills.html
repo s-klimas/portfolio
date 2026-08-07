@@ -86,6 +86,9 @@
         <a class="nav-item" href="#" th:href="@{/sebastian-klimas}">
             ABOUT ME <span class="line"></span>
         </a>
+        <a class="nav-item" href="#" th:href="@{/chatbot}">
+            CHATBOT <span class="line"></span>
+        </a>
     </div>
 </div>
 <div class="body">
@@ -146,7 +149,10 @@
     </div>
 </div>
 <div class="footer">
-    <a>&copy;  2026 Created by <h1>Sebastian Klimas</h1> - All Rights Reserved.</a>
+    <p>
+        <a href="#" th:href="@{/chatbot}" class="footer-chatbot">Now you can chat with my AI-bot about me and my projects!</a>
+    </p>
+    <a class="footer-text">&copy; 2026 Created by <h1>Sebastian Klimas</h1> - All Rights Reserved.</a>
 </div>
 </body>
 </html>

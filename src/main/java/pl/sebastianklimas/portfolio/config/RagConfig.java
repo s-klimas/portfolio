@@ -1,28 +1,22 @@
 package pl.sebastianklimas.portfolio.config;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.reader.JsonMetadataGenerator;
 import org.springframework.ai.reader.JsonReader;
-import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.SimpleVectorStore;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
+
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 @Configuration
 public class RagConfig {
@@ -73,7 +67,6 @@ public class RagConfig {
             return List.of();
         }
 
-        TokenTextSplitter tokenTextSplitter = TokenTextSplitter.builder().build();
         List<Document> allDocuments = new ArrayList<>();
 
         for (Resource jsonResource : ragJsonResources) {
@@ -83,10 +76,9 @@ public class RagConfig {
             List<Document> documents = readJsonAsDocuments(jsonResource, filename);
             documents.forEach(doc -> doc.getMetadata().putIfAbsent("filename", filename));
 
-            List<Document> splitDocuments = tokenTextSplitter.apply(documents);
-            allDocuments.addAll(splitDocuments);
+            allDocuments.addAll(documents);
 
-            log.info("Loaded {} chunks from {}", splitDocuments.size(), filename);
+            log.info("Loaded {} chunks from {}", documents.size(), filename);
         }
 
         log.info("Total documents loaded into vector store: {}", allDocuments.size());

@@ -122,11 +122,11 @@ html, body {
     justify-self: end;
 }
 
-.nav-item:last-child  {
+.nav-item:last-child {
     justify-self: start;
 }
 
-.nav-item-selected    {
+.nav-item-selected {
     justify-self: center;
 }
 
@@ -504,10 +504,10 @@ html, body {
 }
 
 .skill-info {
-    position: relative!important;
-    height: auto!important;
-    overflow: hidden!important;
-    transition: height 0.5s ease!important;
+    position: relative !important;
+    height: auto !important;
+    overflow: hidden !important;
+    transition: height 0.5s ease !important;
 }
 
 .skill-info:hover {
@@ -515,25 +515,25 @@ html, body {
 }
 
 .skill {
-    position: absolute!important;
-    inset: 0!important;
-    display: flex!important;
-    flex-direction: column!important;
-    opacity: 0!important;
-    transform: translateY(10px)!important;
-    pointer-events: none!important;
-    transition: opacity 0.4s ease, transform 0.4s ease!important;
+    position: absolute !important;
+    inset: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    opacity: 0 !important;
+    transform: translateY(10px) !important;
+    pointer-events: none !important;
+    transition: opacity 0.4s ease, transform 0.4s ease !important;
 }
 
 .skill.active,
 .skill-select-info.active {
-    opacity: 1!important;
-    transform: translateY(0)!important;
-    pointer-events: auto!important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
 }
 
 .skill-info.active {
-    height: auto!important;
+    height: auto !important;
 }
 
 .line-under-skills {
@@ -617,7 +617,7 @@ html, body {
     bottom: 0;
     height: 2px;
     background: var(--Gold);
-    transition: all .35s cubic-bezier(.4,0,.2,1);
+    transition: all .35s cubic-bezier(.4, 0, .2, 1);
 }
 
 .about-me-full-box {
@@ -1029,7 +1029,7 @@ html, body {
     color: var(--Middle-Grey, #808080);
 }
 
-.project-show-more a:hover{
+.project-show-more a:hover {
     color: var(--Gold, #B57F02);
     transition: 0.5s ease;
 }
@@ -1220,7 +1220,7 @@ html, body {
     margin-left: 1rem;
 }
 
-@media (max-width:800px) {
+@media (max-width: 800px) {
     .bottom-footer {
         display: block;
     }
@@ -1422,6 +1422,23 @@ html, body {
     cursor: not-allowed;
 }
 
+.chatbot-ai-massage a {
+    display: block;
+}
+
+.chatbot-ai-massage strong {
+    font-weight: 600;
+}
+
+.chatbot-ai-massage ul {
+    margin: 4px 0;
+    padding-left: 20px;
+}
+
+.chatbot-ai-massage li {
+    margin-bottom: 2px;
+}
+
 /* --- MOBILE VERSION --- */
 @media (max-width: 800px) {
     .chatbot-box-full {
@@ -1566,8 +1583,8 @@ html, body {
 
     .skill-info {
         grid-area: 1 / 1 / 2 / 2;
-        height: auto!important;
-        transition: height 0.5s ease!important;
+        height: auto !important;
+        transition: height 0.5s ease !important;
         margin-left: 10px;
         border-radius: 10px;
     }

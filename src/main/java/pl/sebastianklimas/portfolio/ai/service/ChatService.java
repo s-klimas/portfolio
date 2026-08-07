@@ -23,7 +23,7 @@ public class ChatService {
         var questionAnswerAdvisor = QuestionAnswerAdvisor.builder(vectorStore)
                 .searchRequest(SearchRequest.builder()
                         .topK(6)
-                        .similarityThreshold(0.75d)
+                        .similarityThreshold(0.0d)
                         .build())
                 .build();
 
