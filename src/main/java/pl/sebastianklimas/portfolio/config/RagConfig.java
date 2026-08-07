@@ -14,15 +14,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 @Configuration
 public class RagConfig {
 
     private static final Logger log = LoggerFactory.getLogger(RagConfig.class);
-    private static final String VECTOR_STORE_FILE_NAME = "vectorstore.json";
+
+    @Value("${vectorstore.path:/app/data/vectorstore.json}")
+    private String vectorStorePath;
 
     private static final String[] CODE_CHUNK_CONTENT_KEYS = {
             "project", "class_name", "method_name", "http_method", "http_path",
@@ -123,8 +123,14 @@ public class RagConfig {
     }
 
     private File getVectorStoreFile() {
-        Path path = Paths.get("src", "main", "resources", "data");
-        String absolutePath = path.toFile().getAbsolutePath() + File.separator + VECTOR_STORE_FILE_NAME;
-        return new File(absolutePath);
+        File file = new File(vectorStorePath);
+        File parentDir = file.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            boolean created = parentDir.mkdirs();
+            if (!created) {
+                log.warn("Could not create directory {}", parentDir.getAbsolutePath());
+            }
+        }
+        return file;
     }
 }

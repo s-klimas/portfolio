@@ -1,0 +1,22 @@
+services:
+  portfolio:
+    build: .
+    container_name: portfolio
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - vectorstore-data:/app/data
+    networks:
+      - portfolio-network
+    restart: unless-stopped
+
+networks:
+  portfolio-network:
+    external: true
+
+volumes:
+  vectorstore-data:
+

@@ -1,10 +1,11 @@
-FROM maven:3.8.7-openjdk-18-slim  AS MAVEN_BUILD
+FROM maven:3.9.9-eclipse-temurin-21 AS MAVEN_BUILD
 COPY ./pom.xml ./pom.xml
 RUN mvn dependency:go-offline -B
 COPY ./src ./src
-RUN mvn package
+RUN mvn package -DskipTests
 
-FROM openjdk:21-slim-bookworm
+FROM eclipse-temurin:21-jre
 EXPOSE 8080
+RUN mkdir -p /app/data
 COPY --from=MAVEN_BUILD /target/Portfolio-*.jar /app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
