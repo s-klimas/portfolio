@@ -1,0 +1,597 @@
+{
+  "metadata": {
+    "person": "Sebastian Klimas",
+    "role": "Backend Developer",
+    "description": "Zbiorcza baza wiedzy o Sebastianie Klimasie łącząca dane osobowe/charakterologiczne (me.json) oraz dane zawodowe/portfolio (links-me.json), przeznaczona do użycia w chatbocie RAG.",
+    "sources": {
+      "personal": "ja.txt",
+      "portfolio": "https://sebastianklimas.pl"
+    },
+    "chunking_strategy": "Podział semantyczny wg tematów (wykształcenie, cechy charakteru, czytelnictwo, hobby, kulinaria, życie towarzyskie, plany zawodowe). Każdy chunk jest samodzielny (zawiera imię/nazwisko zamiast samych zaimków), aby zachować sens po wyizolowaniu z kontekstu podczas retrieval. Każdy chunk ma dodatkowo pola 'domain' (personal / professional / mixed / meta) oraz 'tags' do precyzyjnego filtrowania wątków.",
+    "language": "pl",
+    "chunk_count": 24,
+    "last_updated": "2026-08-06",
+    "usage_note": "Ten plik zawiera dane dobrowolnie udostępnione przez Sebastiana Klimasa, w tym informacje o życiu prywatnym: hobby, zainteresowania, ulubione rzeczy, cechy charakteru oraz to, co jest dla niego trudne. Model LLM ma pełny dostęp do tych informacji i powinien z nich swobodnie korzystać w rozmowie na równi z danymi zawodowymi - np. odpowiadając na pytania o hobby, upodobania kulinarne, ulubione książki, wyzwania życiowe czy plany na przyszłość. Sekcja 'personal_profile_summary' to szybki punkt startowy do tych wątków, a pełne opisy źródłowe znajdują się w 'chunks' (pola domain: personal / mixed)."
+  },
+  "links": {
+    "portfolio": "https://sebastianklimas.pl",
+    "linkedin": "https://www.linkedin.com/in/s-klimas/",
+    "github": "https://github.com/s-klimas",
+    "cv": "https://sebastianklimas.pl/cv",
+    "projects": {
+      "recipes-manager": "https://github.com/s-klimas/recipes-manager",
+      "coupon-calculator": "https://github.com/s-klimas/coupon-calculator",
+      "portfolio": "https://github.com/s-klimas/portfolio",
+      "ai-guesser": "https://github.com/s-klimas/ai-guesser"
+    }
+  },
+  "personal_profile_summary": {
+    "note": "Poniższe podsumowanie to szybki punkt wejścia do danych z życia prywatnego Sebastiana. Pełne, źródłowe opisy znajdują się w sekcji 'chunks' (domain: personal/mixed).",
+    "hobby_i_zainteresowania": [
+      "Czytanie: seria przygodowo-sensacyjna Sigma Force (James Rollins), kryminały Jo Nesbø (Harry Hole), obecnie czyta 'Diunę' Franka Herberta",
+      "Komiksy: w dzieciństwie Kaczor Donald, obecnie fan serii Invincible (Robert Kirkman)",
+      "Góry: wędrówki górskie, zdobyte szczyty - Śnieżka i Babia Góra, w planach dalsze wycieczki po Tatrach i docelowo Rysy",
+      "Pływanie: uczy się jako osoba dorosła",
+      "Gotowanie: potrafi spędzać w kuchni godziny, uwielbia makarony i dobiera ich jakość świadomie",
+      "Koszykówka: kibicuje drużynie Houston Rockets (obecnie mniej aktywnie śledzi NBA)"
+    ],
+    "co_lubi_robic": [
+      "Gotować, zwłaszcza dania z makaronem",
+      "Czytać książki przygodowe, kryminalne i komiksy",
+      "Chodzić po górach",
+      "Żartować i bawić towarzystwo wśród znajomych",
+      "Uczyć się nowych rzeczy (pływanie, technologie, w tym krytyczne korzystanie z AI)"
+    ],
+    "co_jest_dla_niego_trudne": [
+      "Poznawanie nowych ludzi i nawiązywanie nowych kontaktów - najbardziej wyczerpuje jego 'baterie społeczne', choć po takim wysiłku czuje satysfakcję",
+      "Nauka pływania - nie udało mu się tego opanować jako dziecko, nadrabia jako dorosły",
+      "Obecny, trudny rynek pracy dla Junior Developerów",
+      "Precyzyjne określenie planów zawodowych w perspektywie 10 lat"
+    ],
+    "cechy_charakteru": [
+      "Ambitny, konsekwentny, dokładny",
+      "Słowo, które najlepiej go opisuje: 'rozwój' (fizyczny, mentalny, kulinarny, towarzyski, techniczny)",
+      "Łączy cechy ekstrawertyka (lubi żartować, poznawać ludzi) i introwertyka (ceni czas skupienia)"
+    ],
+    "ulubione_rzeczy": {
+      "seria_ksiazkowa": "Sigma Force (James Rollins)",
+      "najwazniejsza_ksiazka_w_zyciu": "Skąpiec (Molier)",
+      "komiks": "Invincible (Robert Kirkman)",
+      "danie": "Spaghetti Carbonara",
+      "marka_makaronu": "Rummo",
+      "druzyna_koszykarska": "Houston Rockets"
+    },
+    "plany_zyciowe": {
+      "za_5_lat": "Programista Javy, ambitnie przyswajający wiedzę",
+      "za_10_lat": "Lead Developer w przyjaznym zespole (choć nie jest jeszcze pewny konkretnej ścieżki)"
+    }
+  },
+  "chunks": [
+    {
+      "id": "chunk_01",
+      "category": "wyksztalcenie",
+      "title": "Wykształcenie i droga zawodowa",
+      "keywords": [
+        "wykształcenie",
+        "technikum",
+        "studia",
+        "informatyka",
+        "programista",
+        "Kraków",
+        "Junior Software Developer"
+      ],
+      "content": "Sebastian Klimas od czasów gimnazjum szkolił się, by zostać programistą. Ukończył Technikum Energetyczno-Elektroniczne im. Tadeusza Kościuszki nr 9 w Krakowie, uznawane za dobre technikum informatyczne. Następnie obronił studia licencjackie z Informatyki Stosowanej na Uniwersytecie Ekonomicznym w Krakowie, ze specjalizacją „inżynieria oprogramowania”. Aktualnie stara się zdobyć swoją pierwszą stałą pracę jako Junior Software Developer.",
+      "url": null,
+      "language": "pl",
+      "domain": "professional",
+      "tags": [
+        "wykształcenie",
+        "kariera"
+      ]
+    },
+    {
+      "id": "chunk_02",
+      "category": "cechy_charakteru",
+      "title": "Cechy charakteru Sebastiana",
+      "keywords": [
+        "ambitny",
+        "konsekwentny",
+        "dokładny",
+        "rozwój osobisty",
+        "charakter"
+      ],
+      "content": "Sebastian Klimas określa siebie jako osobę ambitną, konsekwentną i dokładną, co pozwala mu stale rozwijać się w wielu dziedzinach życia. Gdyby miał opisać się jednym słowem, wybrałby słowo „rozwój” – rozwija się fizycznie (nauka pływania, chodzenie po górach), mentalnie (czytanie książek i innych mediów), kulinarnie (nowe przepisy, własna książka kulinarna), towarzysko (poszerzanie strefy komfortu) oraz technicznie, ucząc się krytycznego korzystania z nowych technologii, w tym z AI.",
+      "url": null,
+      "language": "pl",
+      "domain": "personal",
+      "tags": [
+        "cechy_charakteru",
+        "charakter",
+        "rozwój_osobisty"
+      ]
+    },
+    {
+      "id": "chunk_03",
+      "category": "czytelnictwo",
+      "title": "Zainteresowania czytelnicze – książki przygodowo-sensacyjne",
+      "keywords": [
+        "książki",
+        "czytanie",
+        "Sigma Force",
+        "James Rollins",
+        "seria książkowa"
+      ],
+      "content": "Sebastian Klimas lubi czytać książki i stara się z roku na rok zwiększać liczbę przeczytanych pozycji. Jego zdecydowanie ulubioną serią jest Sigma Force autorstwa Jamesa Rollinsa – seria książek przygodowo-sensacyjnych powiązanych z ciekawostkami naszego świata. Sebastian zauważył jednak powtarzalny schemat fabularny w kolejnych tomach, przez co nowsze książki z serii wydają mu się coraz bardziej przewidywalne. Mimo to nadal je czyta, ponieważ interesują go zawarte w nich ciekawostki oraz dalsze losy głównych bohaterów.",
+      "url": null,
+      "language": "pl",
+      "domain": "personal",
+      "tags": [
+        "hobby",
+        "czytelnictwo",
+        "ulubione",
+        "lubi_robić"
+      ]
+    },
+    {
+      "id": "chunk_04",
+      "category": "czytelnictwo",
+      "title": "Powieści kryminalne – Jo Nesbø",
+      "keywords": [
+        "kryminały",
+        "Jo Nesbø",
+        "Harry Hole",
+        "literatura kryminalna"
+      ],
+      "content": "Z powieści kryminalnych Sebastian Klimas poleca twórczość Jo Nesbø, a w szczególności serię z detektywem Harrym Hole, którą aktualnie czyta w trakcie.",
+      "url": null,
+      "language": "pl",
+      "domain": "personal",
+      "tags": [
+        "hobby",
+        "czytelnictwo",
+        "lubi_robić"
+      ]
+    },
+    {
+      "id": "chunk_05",
+      "category": "komiksy",
+      "title": "Komiksy – od dzieciństwa do dziś",
+      "keywords": [
+        "komiksy",
+        "Kaczor Donald",
+        "Invincible",
+        "Robert Kirkman"
+      ],
+      "content": "Sebastian Klimas od dzieciństwa jest fanem komiksów. W dzieciństwie jego ulubionymi komiksami były te o Kaczorze Donaldzie. Obecnie jest wielkim fanem serii Invincible Roberta Kirkmana i poleciłby ją każdemu.",
+      "url": null,
+      "language": "pl",
+      "domain": "personal",
+      "tags": [
+        "hobby",
+        "komiksy",
+        "ulubione",
+        "lubi_robić"
+      ]
+    },
+    {
+      "id": "chunk_06",
+      "category": "czytelnictwo",
+      "title": "Aktualnie czytana książka – Diuna",
+      "keywords": [
+        "Diuna",
+        "Frank Herbert",
+        "książka na szafce",
+        "aktualne czytanie"
+      ],
+      "content": "Aktualnie na szafce Sebastian Klimas ma pierwszą część „Diuny” napisanej przez Franka Herberta. Sięgnął po nią, ponieważ po obejrzeniu ekranizacji filmowych chciał lepiej poznać bohaterów oraz to, jak historia rozgrywa się w oryginalnej książce.",
+      "url": null,
+      "language": "pl",
+      "domain": "personal",
+      "tags": [
+        "hobby",
+        "czytelnictwo",
+        "aktualnie_robi"
+      ]
+    },
+    {
+      "id": "chunk_07",
+      "category": "czytelnictwo",
+      "title": "Najważniejsza książka w życiu – Skąpiec Moliera",
+      "keywords": [
+        "Skąpiec",
+        "Molier",
+        "lektura szkolna",
+        "ulubiona książka",
+        "wpływ na życie"
+      ],
+      "content": "Książką, którą Sebastian Klimas przeczytał wielokrotnie i która – jego zdaniem – najbardziej wpłynęła na niego i ukształtowała to, kim jest, jest szkolna lektura „Skąpiec” Moliera.",
+      "url": null,
+      "language": "pl",
+      "domain": "personal",
+      "tags": [
+        "czytelnictwo",
+        "ulubione",
+        "wpływ_na_życie"
+      ]
+    },
+    {
+      "id": "chunk_08",
+      "category": "aktywnosc_fizyczna",
+      "title": "Górskie wyprawy Sebastiana",
+      "keywords": [
+        "góry",
+        "Śnieżka",
+        "Babia Góra",
+        "Rysy",
+        "Tatry",
+        "turystyka górska"
+      ],
+      "content": "Poza czytaniem Sebastian Klimas lubi aktywność fizyczną i czasem chodzi po górach. Zdobył już 2 z 3 najwyższych gór w Polsce – Śnieżkę i Babią Górę – pozostawiając do zdobycia jedynie Rysy. Obecnie planuje jednak skupić się na chodzeniu po Tatrach, bez pośpiechu do zdobycia od razu Rys.",
+      "url": null,
+      "language": "pl",
+      "domain": "personal",
+      "tags": [
+        "hobby",
+        "aktywność_fizyczna",
+        "góry",
+        "lubi_robić"
+      ]
+    },
+    {
+      "id": "chunk_09",
+      "category": "aktywnosc_fizyczna",
+      "title": "Nauka pływania",
+      "keywords": [
+        "pływanie",
+        "nauka nowych umiejętności",
+        "rozwój fizyczny",
+        "motywacja"
+      ],
+      "content": "Sebastian Klimas zaczął uczyć się pływać jako osoba dorosła, ponieważ jako dziecko nie udało mu się nauczyć tego w szkole podstawowej. Nauka nowych rzeczy jest dla niego ważnym elementem życia, a każdy mały krok przybliżający go do pełnych umiejętności pływackich jest dla niego motywatorem do dalszej pracy.",
+      "url": null,
+      "language": "pl",
+      "domain": "personal",
+      "tags": [
+        "hobby",
+        "aktywność_fizyczna",
+        "trudność",
+        "nauka_nowych_rzeczy"
+      ]
+    },
+    {
+      "id": "chunk_10",
+      "category": "kulinaria",
+      "title": "Zamiłowanie do gotowania i makaronów",
+      "keywords": [
+        "gotowanie",
+        "kuchnia",
+        "Spaghetti Carbonara",
+        "makaron",
+        "Rummo",
+        "kulinaria"
+      ],
+      "content": "Sebastian Klimas bardzo lubi gotować i potrafi spędzać w kuchni godziny, przygotowując obiad lub kolację. Nie jest za to fanem śniadań – te powinny być szybkie i proste do zrobienia. Jego ulubionym daniem jest Spaghetti Carbonara, które je w zdecydowanie dużych ilościach. Jest wielkim fanem makaronów i z czasem zaczął doceniać, jak duże znaczenie dla smaku potrawy ma jakość makaronu. Podczas zakupów spędza sporo czasu na wybieraniu dobrego makaronu, a jego ulubionym producentem jest marka Rummo, którą chętnie poleca.",
+      "url": null,
+      "language": "pl",
+      "domain": "personal",
+      "tags": [
+        "hobby",
+        "kulinaria",
+        "ulubione",
+        "lubi_robić"
+      ]
+    },
+    {
+      "id": "chunk_11",
+      "category": "zycie_towarzyskie",
+      "title": "Ekstrawersja i relacje społeczne",
+      "keywords": [
+        "ekstrawersja",
+        "znajomi",
+        "poznawanie ludzi",
+        "energia społeczna",
+        "żarty"
+      ],
+      "content": "W życiu publicznym, wśród znajomych, Sebastian Klimas stara się rozwijać swoją ekstrawertyczną stronę – lubi żartować i zabawiać gości. Najtrudniejszym zadaniem jest dla niego jednak poznawanie nowych ludzi i nawiązywanie nowych kontaktów, ponieważ to właśnie te sytuacje najsilniej wyczerpują jego „baterie społeczne” i wymagają od niego dużo pracy. Mimo to po każdym takim wysiłku społecznym czuje się spełniony.",
+      "url": null,
+      "language": "pl",
+      "domain": "personal",
+      "tags": [
+        "życie_towarzyskie",
+        "charakter",
+        "trudność"
+      ]
+    },
+    {
+      "id": "chunk_12",
+      "category": "plany_zawodowe",
+      "title": "Plany zawodowe – perspektywa 5 lat",
+      "keywords": [
+        "plany zawodowe",
+        "5 lat",
+        "Programista Javy",
+        "kariera"
+      ],
+      "content": "Zapytany, gdzie widzi się za 5 lat, Sebastian Klimas odpowiada, że pracując jako Programista Javy, który ambitnie przyswaja wiedzę.",
+      "url": null,
+      "language": "pl",
+      "domain": "personal",
+      "tags": [
+        "plany_zawodowe",
+        "cele"
+      ]
+    },
+    {
+      "id": "chunk_13",
+      "category": "plany_zawodowe",
+      "title": "Plany zawodowe – perspektywa 10 lat",
+      "keywords": [
+        "plany zawodowe",
+        "10 lat",
+        "Lead Developer",
+        "kariera",
+        "przyszłość zawodowa"
+      ],
+      "content": "Pytanie o to, gdzie widzi się za 10 lat, Sebastian Klimas uważa za trudniejsze, ponieważ nie jest jeszcze w stanie powiedzieć, jaka część komercyjnego świata programowania zainteresuje go najbardziej. Na obecny moment powiedziałby jednak, że za 10 lat chciałby być Lead Developerem w przyjaznym zespole.",
+      "url": null,
+      "language": "pl",
+      "domain": "personal",
+      "tags": [
+        "plany_zawodowe",
+        "cele",
+        "trudność"
+      ]
+    },
+    {
+      "id": "chunk_14",
+      "category": "plany_zawodowe",
+      "title": "Podejście do poszukiwania pracy Junior Developera",
+      "keywords": [
+        "rynek pracy",
+        "Junior Developer",
+        "determinacja",
+        "trudny rynek IT"
+      ],
+      "content": "Sebastian Klimas ma świadomość, że obecnie jest to trudny czas dla Juniorów na rynku pracy IT. Mimo ambitnych planów na przyszłość, nie chodzi z „głową w chmurach” i stara się robić wszystko, co w jego mocy, aby zdobyć wymarzoną dla siebie pozycję Junior Software Developera.",
+      "url": null,
+      "language": "pl",
+      "domain": "personal",
+      "tags": [
+        "plany_zawodowe",
+        "trudność",
+        "rynek_pracy"
+      ]
+    },
+    {
+      "id": "profile-about",
+      "category": "profile",
+      "title": "O Sebastianie Klimasie",
+      "keywords": [
+        "about",
+        "bio",
+        "education",
+        "experience",
+        "backend developer"
+      ],
+      "content": "Sebastian Klimas jest Backend Developerem specjalizującym się w technologiach Java i Spring. Wykształcenie: Uniwersytet Ekonomiczny w Krakowie, kierunek Informatyka Stosowana, specjalizacja Inżynieria Oprogramowania. Pracę licencjacką obronił na temat wykorzystania rozwiązań IT w transferze wiedzy. Doświadczenie komercyjne zdobył w start-upie, gdzie tworzył aplikacje w PHP z użyciem frameworka Laravel, pracując zespołowo nad wirtualnym gabinetem online dla psychologów, umożliwiającym spotkania z pacjentami przez stronę internetową. Prywatnie łączy cechy ekstrawertyka i introwertyka - lubi współpracę i wymianę pomysłów, ale ceni też czas skupienia na kodzie. Poza technologią aktywnie wędruje po górach oraz interesuje się koszykówką, będąc kibicem Houston Rockets (choć obecnie mniej aktywnie śledzi rozgrywki NBA).",
+      "url": "https://sebastianklimas.pl/sebastian-klimas",
+      "language": "pl",
+      "domain": "mixed",
+      "tags": [
+        "bio",
+        "charakter",
+        "hobby",
+        "sport",
+        "ulubione"
+      ]
+    },
+    {
+      "id": "skills-java-frameworks",
+      "category": "skills",
+      "title": "Umiejętności: Java i frameworki",
+      "keywords": [
+        "java",
+        "spring",
+        "spring ai",
+        "spring boot",
+        "spring security",
+        "hibernate",
+        "jpa",
+        "junit5",
+        "mockito",
+        "assertj",
+        "lombok",
+        "mapstruct",
+        "swagger",
+        "thymeleaf",
+        "javafx"
+      ],
+      "content": "Głównym językiem programowania Sebastiana jest Java, który zamierza rozwijać dalej ze względu na jego silną pozycję rynkową. Specjalizuje się w ekosystemie Spring, w tym Spring AI (tworzenie inteligentnych rozwiązań integrujących się z bazami danych, analizujących obrazy), Spring Boot, Spring Data, Spring MVC i Spring Security. W warstwie ORM projektuje czystą, warstwową architekturę, korzystając ze Spring Data JPA i Hibernate. W testowaniu wykorzystuje JUnit 5, Mockito i AssertJ. Narzędzia Java: Lombok, MapStruct oraz dokumentowanie API za pomocą Swagger/OpenAPI. Do tworzenia interfejsów webowych używa Spring MVC i Thymeleaf. Ma także doświadczenie w tworzeniu aplikacji desktopowych z użyciem JavaFX i SceneBuilder.",
+      "url": "https://sebastianklimas.pl/skills/java",
+      "language": "pl",
+      "domain": "professional",
+      "tags": [
+        "umiejętności_techniczne"
+      ]
+    },
+    {
+      "id": "skills-databases",
+      "category": "skills",
+      "title": "Umiejętności: Bazy danych",
+      "keywords": [
+        "postgresql",
+        "mysql",
+        "h2",
+        "liquibase",
+        "nosql",
+        "firebase",
+        "databases"
+      ],
+      "content": "Na co dzień Sebastian pracuje głównie z relacyjnymi bazami danych. Podstawowym wyborem jest PostgreSQL, ceniony za stabilność i elastyczność. W środowisku deweloperskim, zwłaszcza podczas testów, korzysta również z bazy H2, która pozwala łatwo odtwarzać stan bazy przy każdym uruchomieniu. Naukę baz danych rozpoczynał od MySQL w technikum, poznając podstawy struktury i działania zapytań SQL. Do zarządzania strukturą bazy danych, śledzenia zmian i migracji wykorzystuje Liquibase, co ułatwia utrzymanie spójności między środowiskami i wspiera proces CI/CD. W obszarze NoSQL ma doświadczenie z Firebase zdobyte podczas studiów.",
+      "url": "https://sebastianklimas.pl/skills/databases",
+      "language": "pl",
+      "domain": "professional",
+      "tags": [
+        "umiejętności_techniczne"
+      ]
+    },
+    {
+      "id": "skills-tools-platforms",
+      "category": "skills",
+      "title": "Umiejętności: Narzędzia i platformy",
+      "keywords": [
+        "intellij",
+        "github",
+        "gitlab",
+        "docker",
+        "postman",
+        "tools"
+      ],
+      "content": "Głównym środowiskiem programistycznym Sebastiana jest IntelliJ IDEA od JetBrains, pozwalające w pełni wykorzystać możliwości Javy i Springa. Do kontroli wersji i prezentacji projektów wykorzystuje GitHub, ma też doświadczenie z GitLab zdobyte podczas bardziej złożonych projektów zespołowych w start-upie. Do wdrażania aplikacji korzysta z Dockera - własne portfolio zostało wdrożone właśnie w ten sposób jako praktyczne ćwiczenie pełnego cyklu życia aplikacji. Do testowania API wykorzystuje Postmana.",
+      "url": "https://sebastianklimas.pl/skills/tools",
+      "language": "pl",
+      "domain": "professional",
+      "tags": [
+        "umiejętności_techniczne"
+      ]
+    },
+    {
+      "id": "skills-other",
+      "category": "skills",
+      "title": "Umiejętności: Frontend, design i inne języki",
+      "keywords": [
+        "html",
+        "css",
+        "bootstrap",
+        "javascript",
+        "figma",
+        "php",
+        "laravel",
+        "python",
+        "pycharm",
+        "phpstorm"
+      ],
+      "content": "Poza backendem Sebastian rozwinął umiejętności front-endowe: HTML, CSS oraz framework Bootstrap do tworzenia responsywnych interfejsów, a JavaScript do dodawania interaktywności. Do projektowania graficznego wyglądu stron używa Figmy - w tym narzędziu zaprojektował nową wersję swojego portfolio (próbował też Figma Make, ale był rozczarowany jakością generowanego kodu HTML). Ma profesjonalne doświadczenie w PHP z frameworkiem Laravel oraz środowiskiem PhpStorm, zdobyte w start-upie przy tworzeniu wirtualnego gabinetu dla psychologów. Pracując w branży e-commerce, rozwijał też umiejętności w Pythonie, pisząc i optymalizując skrypty automatyzujące oraz obiektowy system zarządzania produktami, korzystając ze środowiska PyCharm.",
+      "url": "https://sebastianklimas.pl/skills/others",
+      "language": "pl",
+      "domain": "professional",
+      "tags": [
+        "umiejętności_techniczne"
+      ]
+    },
+    {
+      "id": "project-recipes-manager",
+      "category": "project",
+      "title": "Projekt: Recipes Manager",
+      "keywords": [
+        "recipes manager",
+        "spring ai",
+        "spring security",
+        "hibernate",
+        "liquibase",
+        "junit5",
+        "assertj",
+        "mockito",
+        "mapstruct",
+        "postgresql",
+        "chatbot",
+        "ai",
+        "rest api"
+      ],
+      "content": "Recipes Manager to projekt, którego pomysł narodził się podczas przeglądania zeszytu z przepisami kulinarnymi - Sebastian chciał uporządkować tę wiedzę cyfrowo, a następnie rozszerzyć ją o sztuczną inteligencję. Projekt pokazuje umiejętności tworzenia i zabezpieczania aplikacji REST API oraz integracji rozwiązań AI z klasyczną architekturą backendową. Dzięki Spring AI wprowadzono trzy różne endpointy czatu: pierwszy, otwarty, do swobodnych rozmów o gotowaniu dla wszystkich; drugi, wymagający logowania, pozwalający botowi modyfikować dane w bazie (np. dodawać przepisy); trzeci, najbardziej zaawansowany, umożliwiający wysłanie zdjęcia przepisu do modelu językowego, który analizuje treść i sam uzupełnia pola w bazie danych. Do przetwarzania i optymalizacji zdjęć przed wysłaniem do modelu wykorzystano bibliotekę Imgscalr. Projekt jest demonstracją umiejętności Sebastiana jako Java Developera oraz pokazuje, jak nowoczesne podejście do inżynierii oprogramowania może wspierać codzienne czynności, takie jak gotowanie, dzięki AI. Technologie: Spring (AI, Web, Security), AI Tools, Lombok, MapStruct, Swagger, JPA standards, PostgreSQL, Hibernate, Liquibase, JUnit5, AssertJ, Mockito.",
+      "url": "https://sebastianklimas.pl/projects/recipes-manager",
+      "language": "pl",
+      "domain": "professional",
+      "tags": [
+        "projekt",
+        "portfolio"
+      ]
+    },
+    {
+      "id": "project-coupon-calculator",
+      "category": "project",
+      "title": "Projekt: Coupon Calculator",
+      "keywords": [
+        "coupon calculator",
+        "heuristic algorithms",
+        "streams",
+        "optimization",
+        "spring web",
+        "java"
+      ],
+      "content": "Coupon Calculator powstał z pomysłu zaoszczędzenia pieniędzy podczas zakupów online. Sebastian zauważył, że aplikacje zakupowe (np. SHEIN) automatycznie sugerują najbardziej opłacalny kupon dla całego koszyka, ale nie wykorzystują pełnego potencjału dostępnych zniżek - często bardziej opłaca się podzielić listę produktów na kilka mniejszych zamówień i użyć kilku kuponów. Pierwsza wersja aplikacji, tworzona algorytmicznie, działała dobrze dla małych zestawów danych, jednak przy większym zbiorze (16 produktów) liczba możliwych kombinacji (2^n podzbiorów produktów, mnożona przez liczbę dostępnych kuponów) przekroczyła możliwości obliczeniowe współczesnych komputerów. To skłoniło Sebastiana do stworzenia drugiej iteracji projektu, której celem była optymalizacja wydajności poprzez zastosowanie algorytmów heurystycznych - zamiast szukać rozwiązania absolutnie najlepszego, algorytm znajduje rozwiązanie 'wystarczająco dobre' w rozsądnym czasie, dzieląc duże zbiory danych na mniejsze partie kontrolowane zmiennymi konfiguracyjnymi. Projekt jest przykładem udanej optymalizacji i dowodem na to, jak codzienny, praktyczny problem może stać się ambitnym projektem inżynierskim. Technologie: Java, Spring Web, algorytmy heurystyczne, Streams (sekwencyjne i równoległe), Lombok, Swagger, JUnit5, AssertJ, Mockito.",
+      "url": "https://sebastianklimas.pl/projects/coupon-calculator",
+      "language": "pl",
+      "domain": "professional",
+      "tags": [
+        "projekt",
+        "portfolio"
+      ]
+    },
+    {
+      "id": "project-ai-guesser",
+      "category": "project",
+      "title": "Projekt: AI Guesser",
+      "keywords": [
+        "ai guesser",
+        "spring ai",
+        "chatgpt",
+        "llm",
+        "20 questions",
+        "java",
+        "swagger"
+      ],
+      "content": "AI Guesser narodził się z ciekawości i fascynacji nową erą sztucznej inteligencji zapoczątkowaną wraz z premierą ChatGPT. Pierwsza wersja gry 'zgadnij w 20 pytaniach' z ChatGPT nazywała się ChatGPTGuesser i opierała się na surowych zapytaniach HTTP, w których pamięć konwersacji i kontekst użytkownika trzeba było obsługiwać samodzielnie. Gdy pojawiła się biblioteka Spring AI, Sebastian odświeżył projekt, tworząc nową, nowoczesną wersję - AI Guesser - API pozwalające grać w '20 pytań' z różnymi modelami językowymi. Dzięki Spring AI zmiana modelu AI wymaga jedynie prostej modyfikacji konfiguracji, co ułatwia eksperymentowanie i rozwój systemu. Dla Sebastiana projekt ten to poligon testowy, na którym uczy się efektywnego budowania i rozwijania systemów opartych na LLM, oraz dowód, że nadąża za najnowszymi technologiami. Technologie: Java, Spring (AI, Web), Swagger, Lombok, JUnit5, Mockito, AssertJ.",
+      "url": "https://sebastianklimas.pl/projects/ai-guesser",
+      "language": "pl",
+      "domain": "professional",
+      "tags": [
+        "projekt",
+        "portfolio"
+      ]
+    },
+    {
+      "id": "project-portfolio",
+      "category": "project",
+      "title": "Projekt: Portfolio (strona sebastianklimas.pl)",
+      "keywords": [
+        "portfolio",
+        "spring mvc",
+        "thymeleaf",
+        "figma",
+        "docker",
+        "html",
+        "css",
+        "js",
+        "deployment"
+      ],
+      "content": "Projekt Portfolio, czyli strona sebastianklimas.pl, powstał z praktycznej potrzeby lepszego zaprezentowania się jako programista - sam profil GitHub okazał się niewystarczający, by wyróżnić się wśród innych kandydatów podczas przeglądania ofert pracy. Zamiast gotowych rozwiązań typu WordPress, Sebastian postanowił stworzyć własną stronę, traktując to jako okazję do rozwinięcia umiejętności wdrażania aplikacji (deployment). Najtrudniejszym elementem było zrozumienie i opanowanie procesu deploymentu - od stworzenia obrazu Dockera po uruchomienie go na zdalnym serwerze - a także, jako że jest backend developerem, opanowanie zasad nowoczesnego projektowania interfejsów. W tym celu wykorzystał Figmę jako główne narzędzie do prototypowania i planowania wyglądu strony. Projekt pokazuje umiejętność samodzielnego planowania, projektowania i wdrażania w pełni funkcjonalnego systemu, łącząc estetykę z technologią. Technologie: Java, Spring (Web, MVC), Thymeleaf, Figma, Docker, HTML, CSS, JS.",
+      "url": "https://sebastianklimas.pl/projects/portfolio",
+      "language": "pl",
+      "domain": "professional",
+      "tags": [
+        "projekt",
+        "portfolio"
+      ]
+    },
+    {
+      "id": "contact-links",
+      "category": "contact",
+      "title": "Kontakt i linki",
+      "keywords": [
+        "contact",
+        "linkedin",
+        "github",
+        "cv",
+        "links"
+      ],
+      "content": "Profil LinkedIn Sebastiana Klimasa: https://www.linkedin.com/in/s-klimas/. Profil GitHub: https://github.com/s-klimas. CV do pobrania: https://sebastianklimas.pl/cv. Strona portfolio: https://sebastianklimas.pl. Repozytoria projektów: Recipes Manager (https://github.com/s-klimas/recipes-manager), Coupon Calculator (https://github.com/s-klimas/coupon-calculator), Portfolio (https://github.com/s-klimas/portfolio), AI Guesser (https://github.com/s-klimas/ai-guesser).",
+      "url": "https://sebastianklimas.pl",
+      "language": "pl",
+      "domain": "meta",
+      "tags": [
+        "kontakt"
+      ]
+    }
+  ]
+}

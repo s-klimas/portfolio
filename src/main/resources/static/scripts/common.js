@@ -159,3 +159,98 @@ document.querySelectorAll('.skill-box').forEach(project => {
         location.href = project.dataset.link;
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const messagesContainer = document.getElementById('chatbotMessages');
+    const input = document.getElementById('chatbotInput');
+    const submitButton = document.getElementById('chatbotSubmit');
+
+    const API_URL = '/streamedChat'; // ewentualnie '/chat' jeśli wolisz wersję niestreamowaną
+
+    function appendMessage(text, cssClass, asHtml = false) {
+        const p = document.createElement('p');
+        p.classList.add(cssClass);
+        const a = document.createElement('a');
+        if (asHtml) {
+            a.innerHTML = DOMPurify.sanitize(marked.parse(text));
+        } else {
+            a.textContent = text;
+        }
+        p.appendChild(a);
+        messagesContainer.appendChild(p);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        return a;
+    }
+
+    function setInputLocked(locked) {
+        input.disabled = locked;
+        submitButton.disabled = locked;
+    }
+
+    async function sendMessage() {
+        const userText = input.value.trim();
+        if (!userText) {
+            return;
+        }
+
+        appendMessage(userText, 'chatbot-user-message');
+
+        input.value = '';
+
+        setInputLocked(true);
+
+        const aiMessageEl = appendMessage('', 'chatbot-ai-massage');
+
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: userText
+            });
+
+            if (!response.ok) {
+                throw new Error(`Server responded with status ${response.status}`);
+            }
+
+            if (!response.body) {
+                const text = await response.text();
+                aiMessageEl.innerHTML = DOMPurify.sanitize(marked.parse(text));
+            } else {
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder('utf-8');
+                let fullText = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) {
+                        break;
+                    }
+                    const chunk = decoder.decode(value, { stream: true });
+                    fullText += chunk;
+                    aiMessageEl.textContent = fullText;
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+
+                aiMessageEl.innerHTML = DOMPurify.sanitize(marked.parse(fullText));
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        } catch (error) {
+            console.error('Błąd podczas komunikacji z serwerem:', error);
+            aiMessageEl.textContent = 'Wystąpił błąd podczas pobierania odpowiedzi.';
+        } finally {
+            setInputLocked(false);
+            input.focus();
+        }
+    }
+
+    submitButton.addEventListener('click', sendMessage);
+
+    input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && !submitButton.disabled) {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+});
