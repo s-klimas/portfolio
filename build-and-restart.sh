@@ -1,1 +1,1 @@
-docker compose logs -f portfolio
+docker compose up -d --build
